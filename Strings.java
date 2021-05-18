@@ -16,7 +16,7 @@ public final class Strings {
     public static String requireNonNullNorEmpty(String str) {
         if (str == null)
             throw new NullPointerException();
-        if (EMPTY_STRING.equals(str))
+        if (str.isEmpty())
             throw new IllegalArgumentException();
         return str;
     }
@@ -24,25 +24,25 @@ public final class Strings {
     public static String requireNonNullNorEmpty(String str, String message) {
         if (str == null)
             throw new NullPointerException(message);
-        if (EMPTY_STRING.equals(str))
+        if (str.isEmpty())
             throw new IllegalArgumentException(message);
         return str;
     }
 
     public static boolean isNullOrEmpty(String str) {
-        return (str == null || EMPTY_STRING.equals(str));
+        return (str == null || str.isEmpty());
     }
 
     public static boolean nonNullNorEmpty(String str) {
-        return (str != null && !EMPTY_STRING.equals(str));
+        return (str != null && !str.isEmpty());
     }
 
     public static String requireNonNullNorEmptyElse(String str, String defaultStr) {
-        return (str != null && !EMPTY_STRING.equals(str)) ? str : requireNonNullNorEmpty(defaultStr, "defaultStr");
+        return (str != null && !str.isEmpty()) ? str : requireNonNullNorEmpty(defaultStr, "defaultStr");
     }
 
     public static String requireNonNullNorEmptyElseGet(String str, Supplier<String> supplier) {
-        return (str != null && !EMPTY_STRING.equals(str)) ? str
+        return (str != null && !str.isEmpty()) ? str
                 : requireNonNullNorEmpty(Objects.requireNonNull(supplier, "supplier").get(), "supplier.get()");
     }
 
@@ -50,7 +50,7 @@ public final class Strings {
         if (str == null)
             throw new NullPointerException(messageSupplier == null ?
                     null : messageSupplier.get());
-        if (EMPTY_STRING.equals(str))
+        if (str.isEmpty())
             throw new IllegalArgumentException(messageSupplier == null ?
                     null : messageSupplier.get());
         return str;
