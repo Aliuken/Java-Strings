@@ -28,9 +28,9 @@ public final class Strings {
     public static String requireNonNullNorWhiteSpace(String str) {
         if (str == null)
             throw new NullPointerException();
-        
+
         str = str.strip();
-        
+
         if (str.isEmpty())
             throw new IllegalArgumentException();
         return str;
@@ -49,7 +49,7 @@ public final class Strings {
             throw new NullPointerException(message);
 
         str = str.strip();
-        
+
         if (str.isEmpty())
             throw new IllegalArgumentException(message);
         return str;
@@ -106,8 +106,8 @@ public final class Strings {
             throw new NullPointerException(messageSupplier == null ?
                     null : messageSupplier.get());
 
-        str = strip(str);
-        
+        str = str.strip();
+
         if (str.isEmpty())
             throw new IllegalArgumentException(messageSupplier == null ?
                     null : messageSupplier.get());
