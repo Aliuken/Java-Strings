@@ -17,6 +17,46 @@ public final class Strings {
         return (str != null) ? str.strip() : null;
     }
 
+    public static int compareTo(String a, String b) {
+        if(a == b) {
+            return 0;
+        }
+
+        if(a == null) {
+            return -1;
+        }
+
+        if(b == null) {
+            return 1;
+        }
+
+        if(a.equals(b)) {
+            return 0;
+        }
+
+        return a.compareTo(b);
+    }
+
+    public static int compareToIgnoreCase(String a, String b) {
+        if(a == b) {
+            return 0;
+        }
+
+        if(a == null) {
+            return -1;
+        }
+
+        if(b == null) {
+            return 1;
+        }
+
+        if(a.equalsIgnoreCase(b)) {
+            return 0;
+        }
+
+        return a.compareToIgnoreCase(b);
+    }
+
     public static String requireNonNullNorEmpty(String str) {
         if (str == null)
             throw new NullPointerException();
@@ -25,7 +65,7 @@ public final class Strings {
         return str;
     }
 
-    public static String requireNonNullNorWhiteSpace(String str) {
+    public static String requireNonNullNorWhitespace(String str) {
         if (str == null)
             throw new NullPointerException();
 
@@ -44,7 +84,7 @@ public final class Strings {
         return str;
     }
 
-    public static String requireNonNullNorWhiteSpace(String str, String message) {
+    public static String requireNonNullNorWhitespace(String str, String message) {
         if (str == null)
             throw new NullPointerException(message);
 
@@ -59,7 +99,7 @@ public final class Strings {
         return (str == null || str.isEmpty());
     }
 
-    public static boolean isNullOrWhiteSpace(String str) {
+    public static boolean isNullOrWhitespace(String str) {
         return (str == null || str.strip().isEmpty());
     }
 
@@ -67,7 +107,7 @@ public final class Strings {
         return (str != null && !str.isEmpty());
     }
 
-    public static boolean nonNullNorWhiteSpace(String str) {
+    public static boolean nonNullNorWhitespace(String str) {
         return (str != null && !str.strip().isEmpty());
     }
 
@@ -75,9 +115,9 @@ public final class Strings {
         return (str != null && !str.isEmpty()) ? str : requireNonNullNorEmpty(defaultStr, "defaultStr");
     }
 
-    public static String requireNonNullNorWhiteSpaceElse(String str, String defaultStr) {
+    public static String requireNonNullNorWhitespaceElse(String str, String defaultStr) {
         str = strip(str);
-        return (str != null && !str.isEmpty()) ? str : requireNonNullNorWhiteSpace(defaultStr, "defaultStr");
+        return (str != null && !str.isEmpty()) ? str : requireNonNullNorWhitespace(defaultStr, "defaultStr");
     }
 
     public static String requireNonNullNorEmptyElseGet(String str, Supplier<String> supplier) {
@@ -85,10 +125,10 @@ public final class Strings {
                 : requireNonNullNorEmpty(Objects.requireNonNull(supplier, "supplier").get(), "supplier.get()");
     }
 
-    public static String requireNonNullNorWhiteSpaceElseGet(String str, Supplier<String> supplier) {
+    public static String requireNonNullNorWhitespaceElseGet(String str, Supplier<String> supplier) {
         str = strip(str);
         return (str != null && !str.isEmpty()) ? str
-                : requireNonNullNorWhiteSpace(Objects.requireNonNull(supplier, "supplier").get(), "supplier.get()");
+                : requireNonNullNorWhitespace(Objects.requireNonNull(supplier, "supplier").get(), "supplier.get()");
     }
 
     public static String requireNonNullNorEmpty(String str, Supplier<String> messageSupplier) {
@@ -101,7 +141,7 @@ public final class Strings {
         return str;
     }
 
-    public static String requireNonNullNorWhiteSpace(String str, Supplier<String> messageSupplier) {
+    public static String requireNonNullNorWhitespace(String str, Supplier<String> messageSupplier) {
         if (str == null)
             throw new NullPointerException(messageSupplier == null ?
                     null : messageSupplier.get());
