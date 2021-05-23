@@ -1,5 +1,6 @@
-package java.util;
+package myjava.util;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public final class Strings {
@@ -30,10 +31,6 @@ public final class Strings {
             return 1;
         }
 
-        if(a.equals(b)) {
-            return 0;
-        }
-
         return a.compareTo(b);
     }
 
@@ -50,11 +47,23 @@ public final class Strings {
             return 1;
         }
 
-        if(a.equalsIgnoreCase(b)) {
-            return 0;
-        }
-
         return a.compareToIgnoreCase(b);
+    }
+
+    public static boolean isNullOrEmpty(String str) {
+        return (str == null || str.isEmpty());
+    }
+
+    public static boolean isNullOrWhitespace(String str) {
+        return (str == null || str.strip().isEmpty());
+    }
+
+    public static boolean nonNullNorEmpty(String str) {
+        return (str != null && !str.isEmpty());
+    }
+
+    public static boolean nonNullNorWhitespace(String str) {
+        return (str != null && !str.strip().isEmpty());
     }
 
     public static String requireNonNullNorEmpty(String str) {
@@ -95,42 +104,6 @@ public final class Strings {
         return str;
     }
 
-    public static boolean isNullOrEmpty(String str) {
-        return (str == null || str.isEmpty());
-    }
-
-    public static boolean isNullOrWhitespace(String str) {
-        return (str == null || str.strip().isEmpty());
-    }
-
-    public static boolean nonNullNorEmpty(String str) {
-        return (str != null && !str.isEmpty());
-    }
-
-    public static boolean nonNullNorWhitespace(String str) {
-        return (str != null && !str.strip().isEmpty());
-    }
-
-    public static String requireNonNullNorEmptyElse(String str, String defaultStr) {
-        return (str != null && !str.isEmpty()) ? str : requireNonNullNorEmpty(defaultStr, "defaultStr");
-    }
-
-    public static String requireNonNullNorWhitespaceElse(String str, String defaultStr) {
-        str = strip(str);
-        return (str != null && !str.isEmpty()) ? str : requireNonNullNorWhitespace(defaultStr, "defaultStr");
-    }
-
-    public static String requireNonNullNorEmptyElseGet(String str, Supplier<String> supplier) {
-        return (str != null && !str.isEmpty()) ? str
-                : requireNonNullNorEmpty(Objects.requireNonNull(supplier, "supplier").get(), "supplier.get()");
-    }
-
-    public static String requireNonNullNorWhitespaceElseGet(String str, Supplier<String> supplier) {
-        str = strip(str);
-        return (str != null && !str.isEmpty()) ? str
-                : requireNonNullNorWhitespace(Objects.requireNonNull(supplier, "supplier").get(), "supplier.get()");
-    }
-
     public static String requireNonNullNorEmpty(String str, Supplier<String> messageSupplier) {
         if (str == null)
             throw new NullPointerException(messageSupplier == null ?
@@ -152,5 +125,25 @@ public final class Strings {
             throw new IllegalArgumentException(messageSupplier == null ?
                     null : messageSupplier.get());
         return str;
+    }
+
+    public static String requireNonNullNorEmptyElse(String str, String defaultStr) {
+        return (str != null && !str.isEmpty()) ? str : requireNonNullNorEmpty(defaultStr, "defaultStr");
+    }
+
+    public static String requireNonNullNorWhitespaceElse(String str, String defaultStr) {
+        str = strip(str);
+        return (str != null && !str.isEmpty()) ? str : requireNonNullNorWhitespace(defaultStr, "defaultStr");
+    }
+
+    public static String requireNonNullNorEmptyElseGet(String str, Supplier<String> supplier) {
+        return (str != null && !str.isEmpty()) ? str
+                : requireNonNullNorEmpty(Objects.requireNonNull(supplier, "supplier").get(), "supplier.get()");
+    }
+
+    public static String requireNonNullNorWhitespaceElseGet(String str, Supplier<String> supplier) {
+        str = strip(str);
+        return (str != null && !str.isEmpty()) ? str
+                : requireNonNullNorWhitespace(Objects.requireNonNull(supplier, "supplier").get(), "supplier.get()");
     }
 }
