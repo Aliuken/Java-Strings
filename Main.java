@@ -3,33 +3,35 @@ package es.prueba;
 import myjava.util.Strings;
 
 import java.util.function.*;
-import java.util.stream.Collectors;
 
 public class Main {
+    BiFunction<String, String, Object> STRING_COMPARATOR_FUNCTION = Strings.STRING_COMPARATOR::compare;
+    BiFunction<String, String, Object> STRING_COMPARATOR_IGNORE_CASE_FUNCTION = Strings.STRING_COMPARATOR_IGNORE_CASE::compare;
+
     public static void main(String[] args) {
         Main main = new Main();
         main.process();
     }
 
     private void process() {
-        System.out.println("1. equalsIgnoreCase");
+        System.out.println("1. STRING_COMPARATOR");
+        System.out.println();
+        this.processStringComparator();
+        System.out.println();
+
+        System.out.println("2. STRING_COMPARATOR_IGNORE_CASE");
+        System.out.println();
+        this.processStringComparatorIgnoreCase();
+        System.out.println();
+
+        System.out.println("3. equalsIgnoreCase");
         System.out.println();
         this.processEqualsIgnoreCase();
         System.out.println();
 
-        System.out.println("2. strip");
+        System.out.println("4. strip");
         System.out.println();
         this.processStrip();
-        System.out.println();
-
-        System.out.println("3. compareTo");
-        System.out.println();
-        this.processCompareTo();
-        System.out.println();
-
-        System.out.println("4. compareToIgnoreCase");
-        System.out.println();
-        this.processCompareToIgnoreCase();
         System.out.println();
 
         System.out.println("5. isNullOrEmpty");
@@ -119,6 +121,62 @@ public class Main {
         System.out.println();
     }
 
+    private void processStringComparator() {
+        System.out.print("STRING_COMPARATOR.compare(null, null) <=> ");
+        this.processAndPrintException(STRING_COMPARATOR_FUNCTION, null, null);
+
+        System.out.print("STRING_COMPARATOR.compare(null, \"bbb\") <=> ");
+        this.processAndPrintException(STRING_COMPARATOR_FUNCTION, null, "bbb");
+
+        System.out.print("STRING_COMPARATOR.compare(\"aaa\", null) <=> ");
+        this.processAndPrintException(STRING_COMPARATOR_FUNCTION, "aaa", null);
+
+        System.out.print("STRING_COMPARATOR.compare(\"aaa\", \"aba\") <=> ");
+        this.processAndPrintException(STRING_COMPARATOR_FUNCTION, "aaa", "aba");
+
+        System.out.print("STRING_COMPARATOR.compare(\"aba\", \"aaa\") <=> ");
+        this.processAndPrintException(STRING_COMPARATOR_FUNCTION, "aba", "aaa");
+
+        System.out.print("STRING_COMPARATOR.compare(\"aaa\", \"aaa\") <=> ");
+        this.processAndPrintException(STRING_COMPARATOR_FUNCTION, "aaa", "aaa");
+
+        System.out.print("STRING_COMPARATOR.compare(\"aaa\", \"aAa\") <=> ");
+        this.processAndPrintException(STRING_COMPARATOR_FUNCTION, "aaa", "aAa");
+
+        System.out.print("STRING_COMPARATOR.compare(\"aAa\", \"aaa\") <=> ");
+        this.processAndPrintException(STRING_COMPARATOR_FUNCTION, "aAa", "aaa");
+
+        System.out.println();
+    }
+
+    private void processStringComparatorIgnoreCase() {
+        System.out.print("STRING_COMPARATOR_IGNORE_CASE.compare(null, null) <=> ");
+        this.processAndPrintException(STRING_COMPARATOR_IGNORE_CASE_FUNCTION, null, null);
+
+        System.out.print("STRING_COMPARATOR_IGNORE_CASE.compare(null, \"bbb\") <=> ");
+        this.processAndPrintException(STRING_COMPARATOR_IGNORE_CASE_FUNCTION, null, "bbb");
+
+        System.out.print("STRING_COMPARATOR_IGNORE_CASE.compare(\"aaa\", null) <=> ");
+        this.processAndPrintException(STRING_COMPARATOR_IGNORE_CASE_FUNCTION, "aaa", null);
+
+        System.out.print("STRING_COMPARATOR_IGNORE_CASE.compare(\"aaa\", \"aba\") <=> ");
+        this.processAndPrintException(STRING_COMPARATOR_IGNORE_CASE_FUNCTION, "aaa", "aba");
+
+        System.out.print("STRING_COMPARATOR_IGNORE_CASE.compare(\"aba\", \"aaa\") <=> ");
+        this.processAndPrintException(STRING_COMPARATOR_IGNORE_CASE_FUNCTION, "aba", "aaa");
+
+        System.out.print("STRING_COMPARATOR_IGNORE_CASE.compare(\"aaa\", \"aaa\") <=> ");
+        this.processAndPrintException(STRING_COMPARATOR_IGNORE_CASE_FUNCTION, "aaa", "aaa");
+
+        System.out.print("STRING_COMPARATOR_IGNORE_CASE.compare(\"aaa\", \"aAa\") <=> ");
+        this.processAndPrintException(STRING_COMPARATOR_IGNORE_CASE_FUNCTION, "aaa", "aAa");
+
+        System.out.print("STRING_COMPARATOR_IGNORE_CASE.compare(\"aAa\", \"aaa\") <=> ");
+        this.processAndPrintException(STRING_COMPARATOR_IGNORE_CASE_FUNCTION, "aAa", "aaa");
+
+        System.out.println();
+    }
+
     private void processEqualsIgnoreCase() {
         System.out.print("equalsIgnoreCase(null, null) <=> ");
         this.processAndPrintException(Strings::equalsIgnoreCase, null, null);
@@ -153,62 +211,6 @@ public class Main {
 
         System.out.print("strip(\" aaa \") <=> ");
         this.processAndPrintException(Strings::strip, " aaa ");
-
-        System.out.println();
-    }
-
-    private void processCompareTo() {
-        System.out.print("compareTo(null, null) <=> ");
-        this.processAndPrintException(Strings::compareTo, null, null);
-
-        System.out.print("compareTo(null, \"bbb\") <=> ");
-        this.processAndPrintException(Strings::compareTo, null, "bbb");
-
-        System.out.print("compareTo(\"aaa\", null) <=> ");
-        this.processAndPrintException(Strings::compareTo, "aaa", null);
-
-        System.out.print("compareTo(\"aaa\", \"aba\") <=> ");
-        this.processAndPrintException(Strings::compareTo, "aaa", "aba");
-
-        System.out.print("compareTo(\"aba\", \"aaa\") <=> ");
-        this.processAndPrintException(Strings::compareTo, "aba", "aaa");
-
-        System.out.print("compareTo(\"aaa\", \"aaa\") <=> ");
-        this.processAndPrintException(Strings::compareTo, "aaa", "aaa");
-
-        System.out.print("compareTo(\"aaa\", \"aAa\") <=> ");
-        this.processAndPrintException(Strings::compareTo, "aaa", "aAa");
-
-        System.out.print("compareTo(\"aAa\", \"aaa\") <=> ");
-        this.processAndPrintException(Strings::compareTo, "aAa", "aaa");
-
-        System.out.println();
-    }
-
-    private void processCompareToIgnoreCase() {
-        System.out.print("compareToIgnoreCase(null, null) <=> ");
-        this.processAndPrintException(Strings::compareToIgnoreCase, null, null);
-
-        System.out.print("compareToIgnoreCase(null, \"bbb\") <=> ");
-        this.processAndPrintException(Strings::compareToIgnoreCase, null, "bbb");
-
-        System.out.print("compareToIgnoreCase(\"aaa\", null) <=> ");
-        this.processAndPrintException(Strings::compareToIgnoreCase, "aaa", null);
-
-        System.out.print("compareToIgnoreCase(\"aaa\", \"aba\") <=> ");
-        this.processAndPrintException(Strings::compareToIgnoreCase, "aaa", "aba");
-
-        System.out.print("compareToIgnoreCase(\"aba\", \"aaa\") <=> ");
-        this.processAndPrintException(Strings::compareToIgnoreCase, "aba", "aaa");
-
-        System.out.print("compareToIgnoreCase(\"aaa\", \"aaa\") <=> ");
-        this.processAndPrintException(Strings::compareToIgnoreCase, "aaa", "aaa");
-
-        System.out.print("compareToIgnoreCase(\"aaa\", \"aAa\") <=> ");
-        this.processAndPrintException(Strings::compareToIgnoreCase, "aaa", "aAa");
-
-        System.out.print("compareToIgnoreCase(\"aAa\", \"aaa\") <=> ");
-        this.processAndPrintException(Strings::compareToIgnoreCase, "aAa", "aaa");
 
         System.out.println();
     }
