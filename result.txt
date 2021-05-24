@@ -1,4 +1,28 @@
-1. equalsIgnoreCase
+1. STRING_COMPARATOR
+
+STRING_COMPARATOR.compare(null, null) <=> 0
+STRING_COMPARATOR.compare(null, "bbb") <=> -1
+STRING_COMPARATOR.compare("aaa", null) <=> 1
+STRING_COMPARATOR.compare("aaa", "aba") <=> -1
+STRING_COMPARATOR.compare("aba", "aaa") <=> 1
+STRING_COMPARATOR.compare("aaa", "aaa") <=> 0
+STRING_COMPARATOR.compare("aaa", "aAa") <=> 32
+STRING_COMPARATOR.compare("aAa", "aaa") <=> -32
+
+
+2. STRING_COMPARATOR_IGNORE_CASE
+
+STRING_COMPARATOR_IGNORE_CASE.compare(null, null) <=> 0
+STRING_COMPARATOR_IGNORE_CASE.compare(null, "bbb") <=> -1
+STRING_COMPARATOR_IGNORE_CASE.compare("aaa", null) <=> 1
+STRING_COMPARATOR_IGNORE_CASE.compare("aaa", "aba") <=> -1
+STRING_COMPARATOR_IGNORE_CASE.compare("aba", "aaa") <=> 1
+STRING_COMPARATOR_IGNORE_CASE.compare("aaa", "aaa") <=> 0
+STRING_COMPARATOR_IGNORE_CASE.compare("aaa", "aAa") <=> 0
+STRING_COMPARATOR_IGNORE_CASE.compare("aAa", "aaa") <=> 0
+
+
+3. equalsIgnoreCase
 
 equalsIgnoreCase(null, null) <=> true
 equalsIgnoreCase(null, "bbb") <=> false
@@ -10,34 +34,10 @@ equalsIgnoreCase("aaa", "aAa") <=> true
 equalsIgnoreCase("aAa", "aaa") <=> true
 
 
-2. strip
+4. strip
 
 strip(null) <=> null
 strip(" aaa ") <=> "aaa"
-
-
-3. compareTo
-
-compareTo(null, null) <=> 0
-compareTo(null, "bbb") <=> -1
-compareTo("aaa", null) <=> 1
-compareTo("aaa", "aba") <=> -1
-compareTo("aba", "aaa") <=> 1
-compareTo("aaa", "aaa") <=> 0
-compareTo("aaa", "aAa") <=> 32
-compareTo("aAa", "aaa") <=> -32
-
-
-4. compareToIgnoreCase
-
-compareToIgnoreCase(null, null) <=> 0
-compareToIgnoreCase(null, "bbb") <=> -1
-compareToIgnoreCase("aaa", null) <=> 1
-compareToIgnoreCase("aaa", "aba") <=> -1
-compareToIgnoreCase("aba", "aaa") <=> 1
-compareToIgnoreCase("aaa", "aaa") <=> 0
-compareToIgnoreCase("aaa", "aAa") <=> 0
-compareToIgnoreCase("aAa", "aaa") <=> 0
 
 
 5. isNullOrEmpty
@@ -230,5 +230,4 @@ requireNonNullNorWhitespaceElseGet(null, this::defaultValueSupplier) <=> "Suppli
 requireNonNullNorWhitespaceElseGet("", this::defaultValueSupplier) <=> "Supplier: defaultValue"
 requireNonNullNorWhitespaceElseGet("   ", this::defaultValueSupplier) <=> "Supplier: defaultValue"
 requireNonNullNorWhitespaceElseGet(" aaa ", this::defaultValueSupplier) <=> "aaa"
-
 
