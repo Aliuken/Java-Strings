@@ -6,44 +6,8 @@ import java.util.function.Supplier;
 
 public final class Strings {
     public static final String EMPTY_STRING = "";
-
-    public static final Comparator<String> STRING_COMPARATOR = new Comparator<String>() {
-        @Override
-        public int compare(String a, String b) {
-            if(a == b) {
-                return 0;
-            }
-
-            if(a == null) {
-                return -1;
-            }
-
-            if(b == null) {
-                return 1;
-            }
-
-            return a.compareTo(b);
-        }
-    };
-
-    public static final Comparator<String> STRING_COMPARATOR_IGNORE_CASE = new Comparator<String>() {
-        @Override
-        public int compare(String a, String b) {
-            if(a == b) {
-                return 0;
-            }
-
-            if(a == null) {
-                return -1;
-            }
-
-            if(b == null) {
-                return 1;
-            }
-
-            return a.compareToIgnoreCase(b);
-        }
-    };
+    public static final Comparator<String> STRING_COMPARATOR = ((String a, String b) -> Strings.compare(a, b));
+    public static final Comparator<String> STRING_COMPARATOR_IGNORE_CASE = ((String a, String b) -> Strings.compareIgnoreCase(a, b));
 
     private Strings() {
         throw new AssertionError("No java.util.Strings instances for you!");
@@ -55,6 +19,38 @@ public final class Strings {
 
     public static String strip(String str) {
         return (str != null) ? str.strip() : null;
+    }
+
+    public static int compare(String a, String b) {
+        if(a == b) {
+            return 0;
+        }
+
+        if(a == null) {
+            return -1;
+        }
+
+        if(b == null) {
+            return 1;
+        }
+
+        return a.compareTo(b);
+    }
+
+    public static int compareIgnoreCase(String a, String b) {
+        if(a == b) {
+            return 0;
+        }
+
+        if(a == null) {
+            return -1;
+        }
+
+        if(b == null) {
+            return 1;
+        }
+
+        return a.compareToIgnoreCase(b);
     }
 
     public static boolean isNullOrEmpty(String str) {
