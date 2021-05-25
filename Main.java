@@ -1,507 +1,233 @@
-package es.prueba;
-
-import myjava.util.Strings;
-
-import java.util.function.*;
-
-public class Main {
-    BiFunction<String, String, Object> STRING_COMPARATOR_FUNCTION = Strings.STRING_COMPARATOR::compare;
-    BiFunction<String, String, Object> STRING_COMPARATOR_IGNORE_CASE_FUNCTION = Strings.STRING_COMPARATOR_IGNORE_CASE::compare;
-
-    public static void main(String[] args) {
-        Main main = new Main();
-        main.process();
-    }
-
-    private void process() {
-        System.out.println("1. STRING_COMPARATOR");
-        System.out.println();
-        this.processStringComparator();
-        System.out.println();
-
-        System.out.println("2. STRING_COMPARATOR_IGNORE_CASE");
-        System.out.println();
-        this.processStringComparatorIgnoreCase();
-        System.out.println();
-
-        System.out.println("3. equalsIgnoreCase");
-        System.out.println();
-        this.processEqualsIgnoreCase();
-        System.out.println();
-
-        System.out.println("4. strip");
-        System.out.println();
-        this.processStrip();
-        System.out.println();
-
-        System.out.println("5. isNullOrEmpty");
-        System.out.println();
-        this.processIsNullOrEmpty();
-        System.out.println();
-
-        System.out.println("6. isNullOrWhitespace");
-        System.out.println();
-        this.processIsNullOrWhitespace();
-        System.out.println();
-
-        System.out.println("7. nonNullNorEmpty");
-        System.out.println();
-        this.processNonNullNorEmpty();
-        System.out.println();
-
-        System.out.println("8. nonNullNorWhitespace");
-        System.out.println();
-        this.processNonNullNorWhitespace();
-        System.out.println();
-
-        System.out.println("9. requireNonNullNorEmpty");
-        System.out.println();
-        this.processRequireNonNullNorEmpty();
-        System.out.println();
-
-        System.out.println("10. requireNonNullNorWhitespace");
-        System.out.println();
-        this.processRequireNonNullNorWhitespace();
-        System.out.println();
-
-        System.out.println("11. requireNonNullNorEmptyWithMessage");
-        System.out.println();
-        this.processRequireNonNullNorEmptyWithMessage();
-        System.out.println();
-
-        System.out.println("12. requireNonNullNorWhitespaceWithMessage");
-        System.out.println();
-        this.processRequireNonNullNorWhitespaceWithMessage();
-        System.out.println();
-
-        System.out.println("13. requireNonNullNorEmptyWithMessageSupplier");
-        System.out.println();
-        this.processRequireNonNullNorEmptyWithMessageSupplier(null, "null");
-        this.processRequireNonNullNorEmptyWithMessageSupplier(this::nonNullNorEmptyMessageSupplier, "this::nonNullNorEmptyMessageSupplier");
-        System.out.println();
-
-        System.out.println("14. requireNonNullNorWhitespaceWithMessageSupplier");
-        System.out.println();
-        this.processRequireNonNullNorWhitespaceWithMessageSupplier(null, "null");
-        this.processRequireNonNullNorWhitespaceWithMessageSupplier(this::nonNullNorWhitespaceMessageSupplier, "this::nonNullNorWhitespaceMessageSupplier");
-        System.out.println();
-
-        System.out.println("15. requireNonNullNorEmptyElse");
-        System.out.println();
-        this.processRequireNonNullNorEmptyElse(null);
-        this.processRequireNonNullNorEmptyElse("");
-        this.processRequireNonNullNorEmptyElse("   ");
-        this.processRequireNonNullNorEmptyElse(" defaultValue ");
-        System.out.println();
-
-        System.out.println("16. requireNonNullNorWhitespaceElse");
-        System.out.println();
-        this.processRequireNonNullNorWhitespaceElse(null);
-        this.processRequireNonNullNorWhitespaceElse("");
-        this.processRequireNonNullNorWhitespaceElse("   ");
-        this.processRequireNonNullNorWhitespaceElse(" defaultValue ");
-        System.out.println();
+1. STRING_COMPARATOR
 
-        System.out.println("17. requireNonNullNorEmptyElseGet");
-        System.out.println();
-        this.processRequireNonNullNorEmptyElseGet(null, "null");
-        this.processRequireNonNullNorEmptyElseGet(this::defaultValueNullSupplier, "this::defaultValueNullSupplier");
-        this.processRequireNonNullNorEmptyElseGet(this::defaultValueEmptySupplier, "this::defaultValueEmptySupplier");
-        this.processRequireNonNullNorEmptyElseGet(this::defaultValueWhitespaceSupplier, "this::defaultValueWhitespaceSupplier");
-        this.processRequireNonNullNorEmptyElseGet(this::defaultValueSupplier, "this::defaultValueSupplier");
-        System.out.println();
+STRING_COMPARATOR.compare(null, null) <=> 0
+STRING_COMPARATOR.compare(null, "bbb") <=> -1
+STRING_COMPARATOR.compare("aaa", null) <=> 1
+STRING_COMPARATOR.compare("aaa", "aba") <=> -1
+STRING_COMPARATOR.compare("aba", "aaa") <=> 1
+STRING_COMPARATOR.compare("aaa", "aaa") <=> 0
+STRING_COMPARATOR.compare("aaa", "aAa") <=> 32
+STRING_COMPARATOR.compare("aAa", "aaa") <=> -32
 
-        System.out.println("18. requireNonNullNorWhitespaceElseGet");
-        System.out.println();
-        this.processRequireNonNullNorWhitespaceElseGet(null, "null");
-        this.processRequireNonNullNorWhitespaceElseGet(this::defaultValueNullSupplier, "this::defaultValueNullSupplier");
-        this.processRequireNonNullNorWhitespaceElseGet(this::defaultValueEmptySupplier, "this::defaultValueEmptySupplier");
-        this.processRequireNonNullNorWhitespaceElseGet(this::defaultValueWhitespaceSupplier, "this::defaultValueWhitespaceSupplier");
-        this.processRequireNonNullNorWhitespaceElseGet(this::defaultValueSupplier, "this::defaultValueSupplier");
-        System.out.println();
-    }
 
-    private void processStringComparator() {
-        System.out.print("STRING_COMPARATOR.compare(null, null) <=> ");
-        this.processAndPrintException(STRING_COMPARATOR_FUNCTION, null, null);
+2. STRING_COMPARATOR_IGNORE_CASE
 
-        System.out.print("STRING_COMPARATOR.compare(null, \"bbb\") <=> ");
-        this.processAndPrintException(STRING_COMPARATOR_FUNCTION, null, "bbb");
+STRING_COMPARATOR_IGNORE_CASE.compare(null, null) <=> 0
+STRING_COMPARATOR_IGNORE_CASE.compare(null, "bbb") <=> -1
+STRING_COMPARATOR_IGNORE_CASE.compare("aaa", null) <=> 1
+STRING_COMPARATOR_IGNORE_CASE.compare("aaa", "aba") <=> -1
+STRING_COMPARATOR_IGNORE_CASE.compare("aba", "aaa") <=> 1
+STRING_COMPARATOR_IGNORE_CASE.compare("aaa", "aaa") <=> 0
+STRING_COMPARATOR_IGNORE_CASE.compare("aaa", "aAa") <=> 0
+STRING_COMPARATOR_IGNORE_CASE.compare("aAa", "aaa") <=> 0
 
-        System.out.print("STRING_COMPARATOR.compare(\"aaa\", null) <=> ");
-        this.processAndPrintException(STRING_COMPARATOR_FUNCTION, "aaa", null);
 
-        System.out.print("STRING_COMPARATOR.compare(\"aaa\", \"aba\") <=> ");
-        this.processAndPrintException(STRING_COMPARATOR_FUNCTION, "aaa", "aba");
+3. equalsIgnoreCase
 
-        System.out.print("STRING_COMPARATOR.compare(\"aba\", \"aaa\") <=> ");
-        this.processAndPrintException(STRING_COMPARATOR_FUNCTION, "aba", "aaa");
+equalsIgnoreCase(null, null) <=> true
+equalsIgnoreCase(null, "bbb") <=> false
+equalsIgnoreCase("aaa", null) <=> false
+equalsIgnoreCase("aaa", "aba") <=> false
+equalsIgnoreCase("aba", "aaa") <=> false
+equalsIgnoreCase("aaa", "aaa") <=> true
+equalsIgnoreCase("aaa", "aAa") <=> true
+equalsIgnoreCase("aAa", "aaa") <=> true
 
-        System.out.print("STRING_COMPARATOR.compare(\"aaa\", \"aaa\") <=> ");
-        this.processAndPrintException(STRING_COMPARATOR_FUNCTION, "aaa", "aaa");
 
-        System.out.print("STRING_COMPARATOR.compare(\"aaa\", \"aAa\") <=> ");
-        this.processAndPrintException(STRING_COMPARATOR_FUNCTION, "aaa", "aAa");
+4. strip
 
-        System.out.print("STRING_COMPARATOR.compare(\"aAa\", \"aaa\") <=> ");
-        this.processAndPrintException(STRING_COMPARATOR_FUNCTION, "aAa", "aaa");
+strip(null) <=> null
+strip(" aaa ") <=> "aaa"
 
-        System.out.println();
-    }
 
-    private void processStringComparatorIgnoreCase() {
-        System.out.print("STRING_COMPARATOR_IGNORE_CASE.compare(null, null) <=> ");
-        this.processAndPrintException(STRING_COMPARATOR_IGNORE_CASE_FUNCTION, null, null);
+5. isNullOrEmpty
 
-        System.out.print("STRING_COMPARATOR_IGNORE_CASE.compare(null, \"bbb\") <=> ");
-        this.processAndPrintException(STRING_COMPARATOR_IGNORE_CASE_FUNCTION, null, "bbb");
+isNullOrEmpty(null) <=> true
+isNullOrEmpty("") <=> true
+isNullOrEmpty("   ") <=> false
+isNullOrEmpty(" aaa ") <=> false
 
-        System.out.print("STRING_COMPARATOR_IGNORE_CASE.compare(\"aaa\", null) <=> ");
-        this.processAndPrintException(STRING_COMPARATOR_IGNORE_CASE_FUNCTION, "aaa", null);
 
-        System.out.print("STRING_COMPARATOR_IGNORE_CASE.compare(\"aaa\", \"aba\") <=> ");
-        this.processAndPrintException(STRING_COMPARATOR_IGNORE_CASE_FUNCTION, "aaa", "aba");
+6. isNullOrWhitespace
 
-        System.out.print("STRING_COMPARATOR_IGNORE_CASE.compare(\"aba\", \"aaa\") <=> ");
-        this.processAndPrintException(STRING_COMPARATOR_IGNORE_CASE_FUNCTION, "aba", "aaa");
+isNullOrWhitespace(null) <=> true
+isNullOrWhitespace("") <=> true
+isNullOrWhitespace("   ") <=> true
+isNullOrWhitespace(" aaa ") <=> false
 
-        System.out.print("STRING_COMPARATOR_IGNORE_CASE.compare(\"aaa\", \"aaa\") <=> ");
-        this.processAndPrintException(STRING_COMPARATOR_IGNORE_CASE_FUNCTION, "aaa", "aaa");
 
-        System.out.print("STRING_COMPARATOR_IGNORE_CASE.compare(\"aaa\", \"aAa\") <=> ");
-        this.processAndPrintException(STRING_COMPARATOR_IGNORE_CASE_FUNCTION, "aaa", "aAa");
+7. nonNullNorEmpty
 
-        System.out.print("STRING_COMPARATOR_IGNORE_CASE.compare(\"aAa\", \"aaa\") <=> ");
-        this.processAndPrintException(STRING_COMPARATOR_IGNORE_CASE_FUNCTION, "aAa", "aaa");
+nonNullNorEmpty(null) <=> false
+nonNullNorEmpty("") <=> false
+nonNullNorEmpty("   ") <=> true
+nonNullNorEmpty(" aaa ") <=> true
 
-        System.out.println();
-    }
 
-    private void processEqualsIgnoreCase() {
-        System.out.print("equalsIgnoreCase(null, null) <=> ");
-        this.processAndPrintException(Strings::equalsIgnoreCase, null, null);
+8. nonNullNorWhitespace
 
-        System.out.print("equalsIgnoreCase(null, \"bbb\") <=> ");
-        this.processAndPrintException(Strings::equalsIgnoreCase, null, "bbb");
+nonNullNorWhitespace(null) <=> false
+nonNullNorWhitespace("") <=> false
+nonNullNorWhitespace("   ") <=> false
+nonNullNorWhitespace(" aaa ") <=> true
 
-        System.out.print("equalsIgnoreCase(\"aaa\", null) <=> ");
-        this.processAndPrintException(Strings::equalsIgnoreCase, "aaa", null);
 
-        System.out.print("equalsIgnoreCase(\"aaa\", \"aba\") <=> ");
-        this.processAndPrintException(Strings::equalsIgnoreCase, "aaa", "aba");
+9. requireNonNullNorEmpty
 
-        System.out.print("equalsIgnoreCase(\"aba\", \"aaa\") <=> ");
-        this.processAndPrintException(Strings::equalsIgnoreCase, "aba", "aaa");
+requireNonNullNorEmpty(null) <=> java.lang.NullPointerException null
+requireNonNullNorEmpty("") <=> java.lang.IllegalArgumentException null
+requireNonNullNorEmpty("   ") <=> "   "
+requireNonNullNorEmpty(" aaa ") <=> " aaa "
 
-        System.out.print("equalsIgnoreCase(\"aaa\", \"aaa\") <=> ");
-        this.processAndPrintException(Strings::equalsIgnoreCase, "aaa", "aaa");
 
-        System.out.print("equalsIgnoreCase(\"aaa\", \"aAa\") <=> ");
-        this.processAndPrintException(Strings::equalsIgnoreCase, "aaa", "aAa");
+10. requireNonNullNorWhitespace
 
-        System.out.print("equalsIgnoreCase(\"aAa\", \"aaa\") <=> ");
-        this.processAndPrintException(Strings::equalsIgnoreCase, "aAa", "aaa");
+requireNonNullNorWhitespace(null) <=> java.lang.NullPointerException null
+requireNonNullNorWhitespace("") <=> java.lang.IllegalArgumentException null
+requireNonNullNorWhitespace("   ") <=> java.lang.IllegalArgumentException null
+requireNonNullNorWhitespace(" aaa ") <=> "aaa"
 
-        System.out.println();
-    }
 
-    private void processStrip() {
-        System.out.print("strip(null) <=> ");
-        this.processAndPrintException(Strings::strip, null);
+11. requireNonNullNorEmptyWithMessage
 
-        System.out.print("strip(\" aaa \") <=> ");
-        this.processAndPrintException(Strings::strip, " aaa ");
+requireNonNullNorEmpty(null, "Null or empty not allowed") <=> java.lang.NullPointerException Null or empty not allowed
+requireNonNullNorEmpty("", "Null or empty not allowed") <=> java.lang.IllegalArgumentException Null or empty not allowed
+requireNonNullNorEmpty("   ", "Null or empty not allowed") <=> "   "
+requireNonNullNorEmpty(" aaa ", "Null or empty not allowed") <=> " aaa "
 
-        System.out.println();
-    }
 
-    private void processIsNullOrEmpty() {
-        System.out.print("isNullOrEmpty(null) <=> ");
-        this.processAndPrintException(Strings::isNullOrEmpty, null);
+12. requireNonNullNorWhitespaceWithMessage
 
-        System.out.print("isNullOrEmpty(\"\") <=> ");
-        this.processAndPrintException(Strings::isNullOrEmpty, "");
+requireNonNullNorWhitespace(null, "Null or whitespace not allowed") <=> java.lang.NullPointerException Null or whitespace not allowed
+requireNonNullNorWhitespace("", "Null or whitespace not allowed") <=> java.lang.IllegalArgumentException Null or whitespace not allowed
+requireNonNullNorWhitespace("   ", "Null or whitespace not allowed") <=> java.lang.IllegalArgumentException Null or whitespace not allowed
+requireNonNullNorWhitespace(" aaa ", "Null or whitespace not allowed") <=> "aaa"
 
-        System.out.print("isNullOrEmpty(\"   \") <=> ");
-        this.processAndPrintException(Strings::isNullOrEmpty, "   ");
 
-        System.out.print("isNullOrEmpty(\" aaa \") <=> ");
-        this.processAndPrintException(Strings::isNullOrEmpty, " aaa ");
+13. requireNonNullNorEmptyWithMessageSupplier
 
-        System.out.println();
-    }
+requireNonNullNorEmpty(null, null) <=> java.lang.NullPointerException null
+requireNonNullNorEmpty("", null) <=> java.lang.IllegalArgumentException null
+requireNonNullNorEmpty("   ", null) <=> "   "
+requireNonNullNorEmpty(" aaa ", null) <=> " aaa "
 
-    private void processIsNullOrWhitespace() {
-        System.out.print("isNullOrWhitespace(null) <=> ");
-        this.processAndPrintException(Strings::isNullOrWhitespace, null);
+requireNonNullNorEmpty(null, this::nonNullNorEmptyMessageSupplier) <=> java.lang.NullPointerException Supplier: Null or empty not allowed
+requireNonNullNorEmpty("", this::nonNullNorEmptyMessageSupplier) <=> java.lang.IllegalArgumentException Supplier: Null or empty not allowed
+requireNonNullNorEmpty("   ", this::nonNullNorEmptyMessageSupplier) <=> "   "
+requireNonNullNorEmpty(" aaa ", this::nonNullNorEmptyMessageSupplier) <=> " aaa "
 
-        System.out.print("isNullOrWhitespace(\"\") <=> ");
-        this.processAndPrintException(Strings::isNullOrWhitespace, "");
 
-        System.out.print("isNullOrWhitespace(\"   \") <=> ");
-        this.processAndPrintException(Strings::isNullOrWhitespace, "   ");
+14. requireNonNullNorWhitespaceWithMessageSupplier
 
-        System.out.print("isNullOrWhitespace(\" aaa \") <=> ");
-        this.processAndPrintException(Strings::isNullOrWhitespace, " aaa ");
+requireNonNullNorWhitespace(null, null) <=> java.lang.NullPointerException null
+requireNonNullNorWhitespace("", null) <=> java.lang.IllegalArgumentException null
+requireNonNullNorWhitespace("   ", null) <=> java.lang.IllegalArgumentException null
+requireNonNullNorWhitespace(" aaa ", null) <=> "aaa"
 
-        System.out.println();
-    }
+requireNonNullNorWhitespace(null, this::nonNullNorWhitespaceMessageSupplier) <=> java.lang.NullPointerException Supplier: Null or whitespace not allowed
+requireNonNullNorWhitespace("", this::nonNullNorWhitespaceMessageSupplier) <=> java.lang.IllegalArgumentException Supplier: Null or whitespace not allowed
+requireNonNullNorWhitespace("   ", this::nonNullNorWhitespaceMessageSupplier) <=> java.lang.IllegalArgumentException Supplier: Null or whitespace not allowed
+requireNonNullNorWhitespace(" aaa ", this::nonNullNorWhitespaceMessageSupplier) <=> "aaa"
 
-    private void processNonNullNorEmpty() {
-        System.out.print("nonNullNorEmpty(null) <=> ");
-        this.processAndPrintException(Strings::nonNullNorEmpty, null);
 
-        System.out.print("nonNullNorEmpty(\"\") <=> ");
-        this.processAndPrintException(Strings::nonNullNorEmpty, "");
+15. requireNonNullNorEmptyElse
 
-        System.out.print("nonNullNorEmpty(\"   \") <=> ");
-        this.processAndPrintException(Strings::nonNullNorEmpty, "   ");
+requireNonNullNorEmptyElse(null, null) <=> java.lang.NullPointerException defaultStr
+requireNonNullNorEmptyElse("", null) <=> java.lang.NullPointerException defaultStr
+requireNonNullNorEmptyElse("   ", null) <=> "   "
+requireNonNullNorEmptyElse(" aaa ", null) <=> " aaa "
 
-        System.out.print("nonNullNorEmpty(\" aaa \") <=> ");
-        this.processAndPrintException(Strings::nonNullNorEmpty, " aaa ");
+requireNonNullNorEmptyElse(null, ) <=> java.lang.IllegalArgumentException defaultStr
+requireNonNullNorEmptyElse("", ) <=> java.lang.IllegalArgumentException defaultStr
+requireNonNullNorEmptyElse("   ", ) <=> "   "
+requireNonNullNorEmptyElse(" aaa ", ) <=> " aaa "
 
-        System.out.println();
-    }
+requireNonNullNorEmptyElse(null,    ) <=> "   "
+requireNonNullNorEmptyElse("",    ) <=> "   "
+requireNonNullNorEmptyElse("   ",    ) <=> "   "
+requireNonNullNorEmptyElse(" aaa ",    ) <=> " aaa "
 
-    private void processNonNullNorWhitespace() {
-        System.out.print("nonNullNorWhitespace(null) <=> ");
-        this.processAndPrintException(Strings::nonNullNorWhitespace, null);
+requireNonNullNorEmptyElse(null,  defaultValue ) <=> " defaultValue "
+requireNonNullNorEmptyElse("",  defaultValue ) <=> " defaultValue "
+requireNonNullNorEmptyElse("   ",  defaultValue ) <=> "   "
+requireNonNullNorEmptyElse(" aaa ",  defaultValue ) <=> " aaa "
 
-        System.out.print("nonNullNorWhitespace(\"\") <=> ");
-        this.processAndPrintException(Strings::nonNullNorWhitespace, "");
 
-        System.out.print("nonNullNorWhitespace(\"   \") <=> ");
-        this.processAndPrintException(Strings::nonNullNorWhitespace, "   ");
+16. requireNonNullNorWhitespaceElse
 
-        System.out.print("nonNullNorWhitespace(\" aaa \") <=> ");
-        this.processAndPrintException(Strings::nonNullNorWhitespace, " aaa ");
+requireNonNullNorWhitespaceElse(null, null) <=> java.lang.NullPointerException defaultStr
+requireNonNullNorWhitespaceElse("", null) <=> java.lang.NullPointerException defaultStr
+requireNonNullNorWhitespaceElse("   ", null) <=> java.lang.NullPointerException defaultStr
+requireNonNullNorWhitespaceElse(" aaa ", null) <=> "aaa"
 
-        System.out.println();
-    }
+requireNonNullNorWhitespaceElse(null, ) <=> java.lang.IllegalArgumentException defaultStr
+requireNonNullNorWhitespaceElse("", ) <=> java.lang.IllegalArgumentException defaultStr
+requireNonNullNorWhitespaceElse("   ", ) <=> java.lang.IllegalArgumentException defaultStr
+requireNonNullNorWhitespaceElse(" aaa ", ) <=> "aaa"
 
-    private void processRequireNonNullNorEmpty() {
-        System.out.print("requireNonNullNorEmpty(null) <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorEmpty, null);
+requireNonNullNorWhitespaceElse(null,    ) <=> java.lang.IllegalArgumentException defaultStr
+requireNonNullNorWhitespaceElse("",    ) <=> java.lang.IllegalArgumentException defaultStr
+requireNonNullNorWhitespaceElse("   ",    ) <=> java.lang.IllegalArgumentException defaultStr
+requireNonNullNorWhitespaceElse(" aaa ",    ) <=> "aaa"
 
-        System.out.print("requireNonNullNorEmpty(\"\") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorEmpty, "");
+requireNonNullNorWhitespaceElse(null,  defaultValue ) <=> "defaultValue"
+requireNonNullNorWhitespaceElse("",  defaultValue ) <=> "defaultValue"
+requireNonNullNorWhitespaceElse("   ",  defaultValue ) <=> "defaultValue"
+requireNonNullNorWhitespaceElse(" aaa ",  defaultValue ) <=> "aaa"
 
-        System.out.print("requireNonNullNorEmpty(\"   \") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorEmpty, "   ");
 
-        System.out.print("requireNonNullNorEmpty(\" aaa \") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorEmpty, " aaa ");
+17. requireNonNullNorEmptyElseGet
 
-        System.out.println();
-    }
+requireNonNullNorEmptyElseGet(null, null) <=> java.lang.NullPointerException supplier
+requireNonNullNorEmptyElseGet("", null) <=> java.lang.NullPointerException supplier
+requireNonNullNorEmptyElseGet("   ", null) <=> "   "
+requireNonNullNorEmptyElseGet(" aaa ", null) <=> " aaa "
 
-    private void processRequireNonNullNorWhitespace() {
-        System.out.print("requireNonNullNorWhitespace(null) <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorWhitespace, null);
+requireNonNullNorEmptyElseGet(null, this::defaultValueNullSupplier) <=> java.lang.NullPointerException supplier.get()
+requireNonNullNorEmptyElseGet("", this::defaultValueNullSupplier) <=> java.lang.NullPointerException supplier.get()
+requireNonNullNorEmptyElseGet("   ", this::defaultValueNullSupplier) <=> "   "
+requireNonNullNorEmptyElseGet(" aaa ", this::defaultValueNullSupplier) <=> " aaa "
 
-        System.out.print("requireNonNullNorWhitespace(\"\") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorWhitespace, "");
+requireNonNullNorEmptyElseGet(null, this::defaultValueEmptySupplier) <=> java.lang.IllegalArgumentException supplier.get()
+requireNonNullNorEmptyElseGet("", this::defaultValueEmptySupplier) <=> java.lang.IllegalArgumentException supplier.get()
+requireNonNullNorEmptyElseGet("   ", this::defaultValueEmptySupplier) <=> "   "
+requireNonNullNorEmptyElseGet(" aaa ", this::defaultValueEmptySupplier) <=> " aaa "
 
-        System.out.print("requireNonNullNorWhitespace(\"   \") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorWhitespace, "   ");
+requireNonNullNorEmptyElseGet(null, this::defaultValueWhitespaceSupplier) <=> "   "
+requireNonNullNorEmptyElseGet("", this::defaultValueWhitespaceSupplier) <=> "   "
+requireNonNullNorEmptyElseGet("   ", this::defaultValueWhitespaceSupplier) <=> "   "
+requireNonNullNorEmptyElseGet(" aaa ", this::defaultValueWhitespaceSupplier) <=> " aaa "
 
-        System.out.print("requireNonNullNorWhitespace(\" aaa \") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorWhitespace, " aaa ");
+requireNonNullNorEmptyElseGet(null, this::defaultValueSupplier) <=> " Supplier: defaultValue "
+requireNonNullNorEmptyElseGet("", this::defaultValueSupplier) <=> " Supplier: defaultValue "
+requireNonNullNorEmptyElseGet("   ", this::defaultValueSupplier) <=> "   "
+requireNonNullNorEmptyElseGet(" aaa ", this::defaultValueSupplier) <=> " aaa "
 
-        System.out.println();
-    }
 
-    private void processRequireNonNullNorEmptyWithMessage() {
-        System.out.print("requireNonNullNorEmpty(null, \"Null or empty not allowed\") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorEmpty, null, "Null or empty not allowed");
+18. requireNonNullNorWhitespaceElseGet
 
-        System.out.print("requireNonNullNorEmpty(\"\", \"Null or empty not allowed\") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorEmpty, "", "Null or empty not allowed");
+requireNonNullNorWhitespaceElseGet(null, null) <=> java.lang.NullPointerException supplier
+requireNonNullNorWhitespaceElseGet("", null) <=> java.lang.NullPointerException supplier
+requireNonNullNorWhitespaceElseGet("   ", null) <=> java.lang.NullPointerException supplier
+requireNonNullNorWhitespaceElseGet(" aaa ", null) <=> "aaa"
 
-        System.out.print("requireNonNullNorEmpty(\"   \", \"Null or empty not allowed\") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorEmpty, "   ", "Null or empty not allowed");
+requireNonNullNorWhitespaceElseGet(null, this::defaultValueNullSupplier) <=> java.lang.NullPointerException supplier.get()
+requireNonNullNorWhitespaceElseGet("", this::defaultValueNullSupplier) <=> java.lang.NullPointerException supplier.get()
+requireNonNullNorWhitespaceElseGet("   ", this::defaultValueNullSupplier) <=> java.lang.NullPointerException supplier.get()
+requireNonNullNorWhitespaceElseGet(" aaa ", this::defaultValueNullSupplier) <=> "aaa"
 
-        System.out.print("requireNonNullNorEmpty(\" aaa \", \"Null or empty not allowed\") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorEmpty, " aaa ", "Null or empty not allowed");
+requireNonNullNorWhitespaceElseGet(null, this::defaultValueEmptySupplier) <=> java.lang.IllegalArgumentException supplier.get()
+requireNonNullNorWhitespaceElseGet("", this::defaultValueEmptySupplier) <=> java.lang.IllegalArgumentException supplier.get()
+requireNonNullNorWhitespaceElseGet("   ", this::defaultValueEmptySupplier) <=> java.lang.IllegalArgumentException supplier.get()
+requireNonNullNorWhitespaceElseGet(" aaa ", this::defaultValueEmptySupplier) <=> "aaa"
 
-        System.out.println();
-    }
+requireNonNullNorWhitespaceElseGet(null, this::defaultValueWhitespaceSupplier) <=> java.lang.IllegalArgumentException supplier.get()
+requireNonNullNorWhitespaceElseGet("", this::defaultValueWhitespaceSupplier) <=> java.lang.IllegalArgumentException supplier.get()
+requireNonNullNorWhitespaceElseGet("   ", this::defaultValueWhitespaceSupplier) <=> java.lang.IllegalArgumentException supplier.get()
+requireNonNullNorWhitespaceElseGet(" aaa ", this::defaultValueWhitespaceSupplier) <=> "aaa"
 
-    private void processRequireNonNullNorWhitespaceWithMessage() {
-        System.out.print("requireNonNullNorWhitespace(null, \"Null or whitespace not allowed\") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorWhitespace, null, "Null or whitespace not allowed");
+requireNonNullNorWhitespaceElseGet(null, this::defaultValueSupplier) <=> "Supplier: defaultValue"
+requireNonNullNorWhitespaceElseGet("", this::defaultValueSupplier) <=> "Supplier: defaultValue"
+requireNonNullNorWhitespaceElseGet("   ", this::defaultValueSupplier) <=> "Supplier: defaultValue"
+requireNonNullNorWhitespaceElseGet(" aaa ", this::defaultValueSupplier) <=> "aaa"
 
-        System.out.print("requireNonNullNorWhitespace(\"\", \"Null or whitespace not allowed\") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorWhitespace, "", "Null or whitespace not allowed");
-
-        System.out.print("requireNonNullNorWhitespace(\"   \", \"Null or whitespace not allowed\") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorWhitespace, "   ", "Null or whitespace not allowed");
-
-        System.out.print("requireNonNullNorWhitespace(\" aaa \", \"Null or whitespace not allowed\") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorWhitespace, " aaa ", "Null or whitespace not allowed");
-
-        System.out.println();
-    }
-
-    private void processRequireNonNullNorEmptyWithMessageSupplier(Supplier<String> messageSupplier, String messageSupplierName) {
-        System.out.print("requireNonNullNorEmpty(null, " + messageSupplierName + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorEmpty, null, messageSupplier);
-
-        System.out.print("requireNonNullNorEmpty(\"\", " + messageSupplierName + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorEmpty, "", messageSupplier);
-
-        System.out.print("requireNonNullNorEmpty(\"   \", " + messageSupplierName + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorEmpty, "   ", messageSupplier);
-
-        System.out.print("requireNonNullNorEmpty(\" aaa \", " + messageSupplierName + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorEmpty, " aaa ", messageSupplier);
-
-        System.out.println();
-    }
-
-    private void processRequireNonNullNorWhitespaceWithMessageSupplier(Supplier<String> messageSupplier, String messageSupplierName) {
-        System.out.print("requireNonNullNorWhitespace(null, " + messageSupplierName + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorWhitespace, null, messageSupplier);
-
-        System.out.print("requireNonNullNorWhitespace(\"\", " + messageSupplierName + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorWhitespace, "", messageSupplier);
-
-        System.out.print("requireNonNullNorWhitespace(\"   \", " + messageSupplierName + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorWhitespace, "   ", messageSupplier);
-
-        System.out.print("requireNonNullNorWhitespace(\" aaa \", " + messageSupplierName + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorWhitespace, " aaa ", messageSupplier);
-
-        System.out.println();
-    }
-
-    private void processRequireNonNullNorEmptyElse(String defaultValue) {
-        System.out.print("requireNonNullNorEmptyElse(null, " + defaultValue + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorEmptyElse, null, defaultValue);
-
-        System.out.print("requireNonNullNorEmptyElse(\"\", " + defaultValue + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorEmptyElse, "", defaultValue);
-
-        System.out.print("requireNonNullNorEmptyElse(\"   \", " + defaultValue + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorEmptyElse, "   ", defaultValue);
-
-        System.out.print("requireNonNullNorEmptyElse(\" aaa \", " + defaultValue + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorEmptyElse, " aaa ", defaultValue);
-
-        System.out.println();
-    }
-
-    private void processRequireNonNullNorWhitespaceElse(String defaultValue) {
-        System.out.print("requireNonNullNorWhitespaceElse(null, " + defaultValue + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorWhitespaceElse, null, defaultValue);
-
-        System.out.print("requireNonNullNorWhitespaceElse(\"\", " + defaultValue + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorWhitespaceElse, "", defaultValue);
-
-        System.out.print("requireNonNullNorWhitespaceElse(\"   \", " + defaultValue + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorWhitespaceElse, "   ", defaultValue);
-
-        System.out.print("requireNonNullNorWhitespaceElse(\" aaa \", " + defaultValue + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorWhitespaceElse, " aaa ", defaultValue);
-
-        System.out.println();
-    }
-
-    private void processRequireNonNullNorEmptyElseGet(Supplier<String> defaultValueSupplier, String defaultValueSupplierName) {
-        System.out.print("requireNonNullNorEmptyElseGet(null, " + defaultValueSupplierName + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorEmptyElseGet, null, defaultValueSupplier);
-
-        System.out.print("requireNonNullNorEmptyElseGet(\"\", " + defaultValueSupplierName + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorEmptyElseGet, "", defaultValueSupplier);
-
-        System.out.print("requireNonNullNorEmptyElseGet(\"   \", " + defaultValueSupplierName + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorEmptyElseGet, "   ", defaultValueSupplier);
-
-        System.out.print("requireNonNullNorEmptyElseGet(\" aaa \", " + defaultValueSupplierName + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorEmptyElseGet, " aaa ", defaultValueSupplier);
-
-        System.out.println();
-    }
-
-    private void processRequireNonNullNorWhitespaceElseGet(Supplier<String> defaultValueSupplier, String defaultValueSupplierName) {
-        System.out.print("requireNonNullNorWhitespaceElseGet(null, " + defaultValueSupplierName + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorWhitespaceElseGet, null, defaultValueSupplier);
-
-        System.out.print("requireNonNullNorWhitespaceElseGet(\"\", " + defaultValueSupplierName + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorWhitespaceElseGet, "", defaultValueSupplier);
-
-        System.out.print("requireNonNullNorWhitespaceElseGet(\"   \", " + defaultValueSupplierName + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorWhitespaceElseGet, "   ", defaultValueSupplier);
-
-        System.out.print("requireNonNullNorWhitespaceElseGet(\" aaa \", " + defaultValueSupplierName + ") <=> ");
-        this.processAndPrintException(Strings::requireNonNullNorWhitespaceElseGet, " aaa ", defaultValueSupplier);
-
-        System.out.println();
-    }
-
-    private String nonNullNorEmptyMessageSupplier() {
-        return "Supplier: Null or empty not allowed";
-    }
-
-    private String nonNullNorWhitespaceMessageSupplier() {
-        return "Supplier: Null or whitespace not allowed";
-    }
-
-    private String defaultValueNullSupplier() {
-        return null;
-    }
-
-    private String defaultValueEmptySupplier() {
-        return "";
-    }
-
-    private String defaultValueWhitespaceSupplier() {
-        return "   ";
-    }
-
-    private String defaultValueSupplier() {
-        return " Supplier: defaultValue ";
-    }
-
-    private void processAndPrintException(Function<String, Object> function, String param) {
-        Object result;
-        try {
-            result = function.apply(param);
-            if(result instanceof String) {
-                System.out.println("\"" + result + "\"");
-            } else {
-                System.out.println(result);
-            }
-        } catch(Exception e) {
-            System.out.println(e.getClass().getCanonicalName() + " " + e.getMessage());
-        }
-    }
-
-    private void processAndPrintException(BiFunction<String, String, Object> function, String param1, String param2) {
-        Object result;
-        try {
-            result = function.apply(param1, param2);
-            if(result instanceof String) {
-                System.out.println("\"" + result + "\"");
-            } else {
-                System.out.println(result);
-            }
-        } catch(Exception e) {
-            System.out.println(e.getClass().getCanonicalName() + " " + e.getMessage());
-        }
-    }
-
-    private void processAndPrintException(BiFunction<String, Supplier<String>, Object> function, String param1, Supplier<String> param2) {
-        Object result;
-        try {
-            result = function.apply(param1, param2);
-            if(result instanceof String) {
-                System.out.println("\"" + result + "\"");
-            } else {
-                System.out.println(result);
-            }
-        } catch(Exception e) {
-            System.out.println(e.getClass().getCanonicalName() + " " + e.getMessage());
-        }
-    }
-}
