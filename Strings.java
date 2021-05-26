@@ -70,83 +70,116 @@ public final class Strings {
     }
 
     public static String requireNonNullNorEmpty(String str) {
-        if (str == null)
+        if (str == null) {
             throw new NullPointerException();
-        if (str.isEmpty())
+        }
+        if (str.isEmpty()) {
             throw new IllegalArgumentException();
+        }
         return str;
     }
 
     public static String requireNonNullNorWhitespace(String str) {
-        if (str == null)
+        if (str == null) {
             throw new NullPointerException();
+        }
 
         str = str.strip();
 
-        if (str.isEmpty())
+        if (str.isEmpty()) {
             throw new IllegalArgumentException();
+        }
         return str;
     }
 
-    public static String requireNonNullNorEmpty(String str, String message) {
-        if (str == null)
-            throw new NullPointerException(message);
-        if (str.isEmpty())
-            throw new IllegalArgumentException(message);
+    public static String requireNonNullNorEmpty(String str, String nullMessage, String emptyMessage) {
+        if (str == null) {
+            throw new NullPointerException(nullMessage);
+        }
+        if (str.isEmpty()) {
+            throw new IllegalArgumentException(emptyMessage);
+        }
         return str;
     }
 
-    public static String requireNonNullNorWhitespace(String str, String message) {
-        if (str == null)
-            throw new NullPointerException(message);
+    public static String requireNonNullNorWhitespace(String str, String nullMessage, String whitespaceMessage) {
+        if (str == null) {
+            throw new NullPointerException(nullMessage);
+        }
 
         str = str.strip();
 
-        if (str.isEmpty())
-            throw new IllegalArgumentException(message);
+        if (str.isEmpty()) {
+            throw new IllegalArgumentException(whitespaceMessage);
+        }
         return str;
     }
 
-    public static String requireNonNullNorEmpty(String str, Supplier<String> messageSupplier) {
-        if (str == null)
-            throw new NullPointerException(messageSupplier == null ?
-                    null : messageSupplier.get());
-        if (str.isEmpty())
-            throw new IllegalArgumentException(messageSupplier == null ?
-                    null : messageSupplier.get());
+    public static String requireNonNullNorEmpty(String str, Supplier<String> nullMessageSupplier, Supplier<String> emptyMessageSupplier) {
+        if (str == null) {
+            throw new NullPointerException(nullMessageSupplier != null ? nullMessageSupplier.get() : null);
+        }
+        if (str.isEmpty()) {
+            throw new IllegalArgumentException(emptyMessageSupplier != null ? emptyMessageSupplier.get() : null);
+        }
         return str;
     }
 
-    public static String requireNonNullNorWhitespace(String str, Supplier<String> messageSupplier) {
-        if (str == null)
-            throw new NullPointerException(messageSupplier == null ?
-                    null : messageSupplier.get());
+    public static String requireNonNullNorWhitespace(String str, Supplier<String> nullMessageSupplier, Supplier<String> whitespaceMessageSupplier) {
+        if (str == null) {
+            throw new NullPointerException(nullMessageSupplier != null ? nullMessageSupplier.get() : null);
+        }
 
         str = str.strip();
 
-        if (str.isEmpty())
-            throw new IllegalArgumentException(messageSupplier == null ?
-                    null : messageSupplier.get());
+        if (str.isEmpty()) {
+            throw new IllegalArgumentException(whitespaceMessageSupplier != null ? whitespaceMessageSupplier.get() : null);
+        }
         return str;
     }
 
     public static String requireNonNullNorEmptyElse(String str, String defaultStr) {
-        return (str != null && !str.isEmpty()) ? str : requireNonNullNorEmpty(defaultStr, "defaultStr");
+        return (str != null && !str.isEmpty()) ? str :
+                requireNonNullNorEmpty(defaultStr, "defaultStr", "defaultStr");
     }
 
     public static String requireNonNullNorWhitespaceElse(String str, String defaultStr) {
         str = strip(str);
-        return (str != null && !str.isEmpty()) ? str : requireNonNullNorWhitespace(defaultStr, "defaultStr");
+        return (str != null && !str.isEmpty()) ? str :
+                requireNonNullNorWhitespace(defaultStr, "defaultStr", "defaultStr");
     }
 
     public static String requireNonNullNorEmptyElseGet(String str, Supplier<String> supplier) {
-        return (str != null && !str.isEmpty()) ? str
-                : requireNonNullNorEmpty(Objects.requireNonNull(supplier, "supplier").get(), "supplier.get()");
+        return (str != null && !str.isEmpty()) ? str :
+                requireNonNullNorEmpty(Objects.requireNonNull(supplier, "supplier").get(), "supplier.get()", "supplier.get()");
     }
 
     public static String requireNonNullNorWhitespaceElseGet(String str, Supplier<String> supplier) {
         str = strip(str);
-        return (str != null && !str.isEmpty()) ? str
-                : requireNonNullNorWhitespace(Objects.requireNonNull(supplier, "supplier").get(), "supplier.get()");
+        return (str != null && !str.isEmpty()) ? str :
+                requireNonNullNorWhitespace(Objects.requireNonNull(supplier, "supplier").get(), "supplier.get()", "supplier.get()");
+    }
+
+    public static <X extends Throwable> String requireNonNullNorEmptyElseThrow(String str, Supplier<? extends X> nullExceptionSupplier, Supplier<? extends X> emptyExceptionSupplier) throws X {
+        if (str == null) {
+            throw nullExceptionSupplier.get();
+        }
+        if (str.isEmpty()) {
+            throw emptyExceptionSupplier.get();
+        }
+        return str;
+    }
+
+    public static <X extends Throwable> String requireNonNullNorWhitespaceElseThrow(String str, Supplier<? extends X> nullExceptionSupplier, Supplier<? extends X> whitespaceExceptionSupplier) throws X {
+        if (str == null) {
+            throw nullExceptionSupplier.get();
+        }
+
+        str = str.strip();
+
+        if (str.isEmpty()) {
+            throw whitespaceExceptionSupplier.get();
+        }
+        return str;
     }
 }
