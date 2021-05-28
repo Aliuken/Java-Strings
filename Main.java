@@ -1,8 +1,11 @@
-package es.prueba;
+package myjava.tests;
 
+import myjava.util.StringExceptionMessageSuppliers;
+import myjava.util.StringExceptionMessages;
+import myjava.util.StringExceptionSuppliers;
 import myjava.util.Strings;
-import myjava.util.function.TriFunctionWithThrowable;
 
+import java.util.NoSuchElementException;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -69,33 +72,66 @@ public class Main {
 
         System.out.println("11. requireNonNullNorEmptyWithMessage");
         System.out.println();
-        this.processRequireNonNullNorEmptyWithMessage();
+        this.processRequireNonNullNorEmptyWithMessage(null);
+        this.processRequireNonNullNorEmptyWithMessage(new StringExceptionMessages(null, null, null));
+        this.processRequireNonNullNorEmptyWithMessage(new StringExceptionMessages(null, "Empty not allowed", null));
+        this.processRequireNonNullNorEmptyWithMessage(new StringExceptionMessages("Null not allowed", null, null));
+        this.processRequireNonNullNorEmptyWithMessage(new StringExceptionMessages("Null not allowed", "Empty not allowed", null));
         System.out.println();
 
         System.out.println("12. requireNonNullNorWhitespaceWithMessage");
         System.out.println();
-        this.processRequireNonNullNorWhitespaceWithMessage();
+        this.processRequireNonNullNorWhitespaceWithMessage(null);
+        this.processRequireNonNullNorWhitespaceWithMessage(new StringExceptionMessages(null, null, null));
+        this.processRequireNonNullNorWhitespaceWithMessage(new StringExceptionMessages(null, "Empty not allowed", "Whitespace not allowed"));
+        this.processRequireNonNullNorWhitespaceWithMessage(new StringExceptionMessages("Null not allowed", null, "Whitespace not allowed"));
+        this.processRequireNonNullNorWhitespaceWithMessage(new StringExceptionMessages("Null not allowed", "Empty not allowed", null));
+        this.processRequireNonNullNorWhitespaceWithMessage(new StringExceptionMessages("Null not allowed", "Empty not allowed", "Whitespace not allowed"));
         System.out.println();
 
         System.out.println("13. requireNonNullNorEmptyWithMessageSupplier");
         System.out.println();
-        this.processRequireNonNullNorEmptyWithMessageSupplier(null, null, "null", "null");
-        this.processRequireNonNullNorEmptyWithMessageSupplier(null, this::nonEmptyMessageSupplier, "null", "this::nonEmptyMessageSupplier");
-        this.processRequireNonNullNorEmptyWithMessageSupplier(this::nonNullMessageSupplier, null, "this::nonNullMessageSupplier", "null");
-        this.processRequireNonNullNorEmptyWithMessageSupplier(this::nullMessageSupplier, this::nullMessageSupplier, "this::nullMessageSupplier", "this::nullMessageSupplier");
-        this.processRequireNonNullNorEmptyWithMessageSupplier(this::nonNullMessageSupplier, this::nonEmptyMessageSupplier, "this::nonNullMessageSupplier", "this::nonEmptyMessageSupplier");
+        this.processRequireNonNullNorEmptyWithMessageSupplier(null, null, null, null);
+        this.processRequireNonNullNorEmptyWithMessageSupplier(new StringExceptionMessageSuppliers(null, null, null), "null", "null", "null");
+        this.processRequireNonNullNorEmptyWithMessageSupplier(new StringExceptionMessageSuppliers(null, this::nonEmptyMessageSupplier, null), "null", "this::nonEmptyMessageSupplier", "null");
+        this.processRequireNonNullNorEmptyWithMessageSupplier(new StringExceptionMessageSuppliers(this::nonNullMessageSupplier, null, null), "this::nonNullMessageSupplier", "null", "null");
+        this.processRequireNonNullNorEmptyWithMessageSupplier(new StringExceptionMessageSuppliers(this::nullMessageSupplier, this::nullMessageSupplier, null), "this::nullMessageSupplier", "this::nullMessageSupplier", "null");
+        this.processRequireNonNullNorEmptyWithMessageSupplier(new StringExceptionMessageSuppliers(this::nonNullMessageSupplier, this::nonEmptyMessageSupplier, null), "this::nonNullMessageSupplier", "this::nonEmptyMessageSupplier", "null");
         System.out.println();
 
         System.out.println("14. requireNonNullNorWhitespaceWithMessageSupplier");
         System.out.println();
-        this.processRequireNonNullNorWhitespaceWithMessageSupplier(null, null, "null", "null");
-        this.processRequireNonNullNorWhitespaceWithMessageSupplier(null, this::nonWhitespaceMessageSupplier, "null", "this::nonWhitespaceMessageSupplier");
-        this.processRequireNonNullNorWhitespaceWithMessageSupplier(this::nonNullMessageSupplier, null, "this::nonNullMessageSupplier", "null");
-        this.processRequireNonNullNorWhitespaceWithMessageSupplier(this::nullMessageSupplier, this::nullMessageSupplier, "this::nullMessageSupplier", "this::nullMessageSupplier");
-        this.processRequireNonNullNorWhitespaceWithMessageSupplier(this::nonNullMessageSupplier, this::nonWhitespaceMessageSupplier, "this::nonNullMessageSupplier", "this::nonWhitespaceMessageSupplier");
+        this.processRequireNonNullNorWhitespaceWithMessageSupplier(null, null, null, null);
+        this.processRequireNonNullNorWhitespaceWithMessageSupplier(new StringExceptionMessageSuppliers(null, null, null), "null", "null", "null");
+        this.processRequireNonNullNorWhitespaceWithMessageSupplier(new StringExceptionMessageSuppliers(null, this::nonEmptyMessageSupplier, this::nonWhitespaceMessageSupplier), "null", "this::nonEmptyMessageSupplier", "this::nonWhitespaceMessageSupplier");
+        this.processRequireNonNullNorWhitespaceWithMessageSupplier(new StringExceptionMessageSuppliers(this::nonNullMessageSupplier, null, this::nonWhitespaceMessageSupplier), "this::nonNullMessageSupplier", "null", "this::nonWhitespaceMessageSupplier");
+        this.processRequireNonNullNorWhitespaceWithMessageSupplier(new StringExceptionMessageSuppliers(this::nonNullMessageSupplier, this::nonEmptyMessageSupplier, null), "this::nonNullMessageSupplier", "this::nonEmptyMessageSupplier", "null");
+        this.processRequireNonNullNorWhitespaceWithMessageSupplier(new StringExceptionMessageSuppliers(this::nullMessageSupplier, this::nullMessageSupplier, this::nullMessageSupplier), "this::nullMessageSupplier", "this::nullMessageSupplier", "this::nullMessageSupplier");
+        this.processRequireNonNullNorWhitespaceWithMessageSupplier(new StringExceptionMessageSuppliers(this::nonNullMessageSupplier, this::nonEmptyMessageSupplier, this::nonWhitespaceMessageSupplier), "this::nonNullMessageSupplier", "this::nonEmptyMessageSupplier", "this::nonWhitespaceMessageSupplier");
         System.out.println();
 
-        System.out.println("15. requireNonNullNorEmptyElse");
+        System.out.println("15. requireNonNullNorEmptyElseThrow");
+        System.out.println();
+        this.processRequireNonNullNorEmptyElseThrow(null, null, null, null);
+        this.processRequireNonNullNorEmptyElseThrow(new StringExceptionSuppliers(null, null, null), "null", "null", "null");
+        this.processRequireNonNullNorEmptyElseThrow(new StringExceptionSuppliers(null, this::nonEmptyThrowableSupplier, null), "null", "this::nonEmptyThrowableSupplier", "null");
+        this.processRequireNonNullNorEmptyElseThrow(new StringExceptionSuppliers(this::nonNullThrowableSupplier, null, null), "this::nonNullThrowableSupplier", "null", "null");
+        this.processRequireNonNullNorEmptyElseThrow(new StringExceptionSuppliers(this::nullThrowableSupplier, this::nullThrowableSupplier, null), "this::nullThrowableSupplier", "this::nullThrowableSupplier", "null");
+        this.processRequireNonNullNorEmptyElseThrow(new StringExceptionSuppliers(this::nonNullThrowableSupplier, this::nonEmptyThrowableSupplier, null), "this::nonNullThrowableSupplier", "this::nonEmptyThrowableSupplier", "null");
+        System.out.println();
+
+        System.out.println("16. requireNonNullNorWhitespaceElseThrow");
+        System.out.println();
+        this.processRequireNonNullNorWhitespaceElseThrow(null, null, null, null);
+        this.processRequireNonNullNorWhitespaceElseThrow(new StringExceptionSuppliers(null, null, null), "null", "null", "null");
+        this.processRequireNonNullNorWhitespaceElseThrow(new StringExceptionSuppliers(null, this::nonEmptyThrowableSupplier, this::nonWhitespaceThrowableSupplier), "null", "this::nonEmptyThrowableSupplier", "this::nonWhitespaceThrowableSupplier");
+        this.processRequireNonNullNorWhitespaceElseThrow(new StringExceptionSuppliers(this::nonNullThrowableSupplier, null, this::nonWhitespaceThrowableSupplier), "this::nonNullThrowableSupplier", "null", "this::nonWhitespaceThrowableSupplier");
+        this.processRequireNonNullNorWhitespaceElseThrow(new StringExceptionSuppliers(this::nonNullThrowableSupplier, this::nonEmptyThrowableSupplier, null), "this::nonNullThrowableSupplier", "this::nonEmptyThrowableSupplier", "null");
+        this.processRequireNonNullNorWhitespaceElseThrow(new StringExceptionSuppliers(this::nullThrowableSupplier, this::nullThrowableSupplier, this::nullThrowableSupplier), "this::nullThrowableSupplier", "this::nullThrowableSupplier", "this::nullThrowableSupplier");
+        this.processRequireNonNullNorWhitespaceElseThrow(new StringExceptionSuppliers(this::nonNullThrowableSupplier, this::nonEmptyThrowableSupplier, this::nonWhitespaceThrowableSupplier), "this::nonNullThrowableSupplier", "this::nonEmptyThrowableSupplier", "this::nonWhitespaceThrowableSupplier");
+        System.out.println();
+
+        System.out.println("17. requireNonNullNorEmptyElse");
         System.out.println();
         this.processRequireNonNullNorEmptyElse(null);
         this.processRequireNonNullNorEmptyElse("");
@@ -103,7 +139,7 @@ public class Main {
         this.processRequireNonNullNorEmptyElse(" defaultValue ");
         System.out.println();
 
-        System.out.println("16. requireNonNullNorWhitespaceElse");
+        System.out.println("18. requireNonNullNorWhitespaceElse");
         System.out.println();
         this.processRequireNonNullNorWhitespaceElse(null);
         this.processRequireNonNullNorWhitespaceElse("");
@@ -111,7 +147,7 @@ public class Main {
         this.processRequireNonNullNorWhitespaceElse(" defaultValue ");
         System.out.println();
 
-        System.out.println("17. requireNonNullNorEmptyElseGet");
+        System.out.println("19. requireNonNullNorEmptyElseGet");
         System.out.println();
         this.processRequireNonNullNorEmptyElseGet(null, "null");
         this.processRequireNonNullNorEmptyElseGet(this::nullDefaultValueSupplier, "this::nullDefaultValueSupplier");
@@ -120,31 +156,13 @@ public class Main {
         this.processRequireNonNullNorEmptyElseGet(this::defaultValueSupplier, "this::defaultValueSupplier");
         System.out.println();
 
-        System.out.println("18. requireNonNullNorWhitespaceElseGet");
+        System.out.println("20. requireNonNullNorWhitespaceElseGet");
         System.out.println();
         this.processRequireNonNullNorWhitespaceElseGet(null, "null");
         this.processRequireNonNullNorWhitespaceElseGet(this::nullDefaultValueSupplier, "this::nullDefaultValueSupplier");
         this.processRequireNonNullNorWhitespaceElseGet(this::emptyDefaultValueSupplier, "this::emptyDefaultValueSupplier");
         this.processRequireNonNullNorWhitespaceElseGet(this::whitespaceDefaultValueSupplier, "this::whitespaceDefaultValueSupplier");
         this.processRequireNonNullNorWhitespaceElseGet(this::defaultValueSupplier, "this::defaultValueSupplier");
-        System.out.println();
-
-        System.out.println("19. requireNonNullNorEmptyElseThrow");
-        System.out.println();
-        this.processRequireNonNullNorEmptyElseThrow(null, null, "null", "null");
-        this.processRequireNonNullNorEmptyElseThrow(null, this::nonEmptyThrowableSupplier, "null", "this::nonEmptyThrowableSupplier");
-        this.processRequireNonNullNorEmptyElseThrow(this::nonNullThrowableSupplier, null, "this::nonNullThrowableSupplier", "null");
-        this.processRequireNonNullNorEmptyElseThrow(this::nullThrowableSupplier, this::nullThrowableSupplier, "this::nullThrowableSupplier", "this::nullThrowableSupplier");
-        this.processRequireNonNullNorEmptyElseThrow(this::nonNullThrowableSupplier, this::nonEmptyThrowableSupplier, "this::nonNullThrowableSupplier", "this::nonEmptyThrowableSupplier");
-        System.out.println();
-
-        System.out.println("20. requireNonNullNorWhitespaceElseThrow");
-        System.out.println();
-        this.processRequireNonNullNorWhitespaceElseThrow(null, null, "null", "null");
-        this.processRequireNonNullNorWhitespaceElseThrow(null, this::nonWhitespaceThrowableSupplier, "null", "this::nonWhitespaceThrowableSupplier");
-        this.processRequireNonNullNorWhitespaceElseThrow(this::nonNullThrowableSupplier, null, "this::nonNullThrowableSupplier", "null");
-        this.processRequireNonNullNorWhitespaceElseThrow(this::nullThrowableSupplier, this::nullThrowableSupplier, "this::nullThrowableSupplier", "this::nullThrowableSupplier");
-        this.processRequireNonNullNorWhitespaceElseThrow(this::nonNullThrowableSupplier, this::nonWhitespaceThrowableSupplier, "this::nonNullThrowableSupplier", "this::nonWhitespaceThrowableSupplier");
         System.out.println();
     }
 
@@ -242,6 +260,10 @@ public class Main {
         System.out.println();
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
+    //BOOLEAN METHODS
+
     private void processIsNullOrEmpty() {
         System.out.print("isNullOrEmpty(null) <=> ");
         this.processAndPrintResultOrThrowable(Strings::isNullOrEmpty, (String) null);
@@ -306,6 +328,10 @@ public class Main {
         System.out.println();
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
+    //DEFAULT EXCEPTION METHODS
+
     private void processRequireNonNullNorEmpty() {
         System.out.print("requireNonNullNorEmpty(null) <=> ");
         this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmpty, (String) null);
@@ -338,69 +364,159 @@ public class Main {
         System.out.println();
     }
 
-    private void processRequireNonNullNorEmptyWithMessage() {
-        System.out.print("requireNonNullNorEmpty(null, \"Null not allowed\", \"Empty not allowed\") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmpty, (String) null, "Null not allowed", "Empty not allowed");
+    //------------------------------------------------------------------------------------------------------------------
 
-        System.out.print("requireNonNullNorEmpty(\"\", \"Null not allowed\", \"Empty not allowed\") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmpty, "", "Null not allowed", "Empty not allowed");
+    //DEFAULT EXCEPTION WITH MESSAGE METHODS
 
-        System.out.print("requireNonNullNorEmpty(\"   \", \"Null not allowed\", \"Empty not allowed\") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmpty, "   ", "Null not allowed", "Empty not allowed");
+    private void processRequireNonNullNorEmptyWithMessage(StringExceptionMessages stringExceptionMessages) {
+        String params;
+        if(stringExceptionMessages != null) {
+            params = getObjectValueToPrint(stringExceptionMessages.nullStringParam()) + ", " + getObjectValueToPrint(stringExceptionMessages.emptyStringParam()) + ", " + getObjectValueToPrint(stringExceptionMessages.whitespaceStringParam());
+        } else {
+            params = "NULL";
+        }
 
-        System.out.print("requireNonNullNorEmpty(\" aaa \", \"Null not allowed\", \"Empty not allowed\") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmpty, " aaa ", "Null not allowed", "Empty not allowed");
+        System.out.print("requireNonNullNorEmpty(null, " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmpty, (String) null, stringExceptionMessages);
 
-        System.out.println();
-    }
+        System.out.print("requireNonNullNorEmpty(\"\", " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmpty, "", stringExceptionMessages);
 
-    private void processRequireNonNullNorWhitespaceWithMessage() {
-        System.out.print("requireNonNullNorWhitespace(null, \"Null not allowed\", \"Whitespace not allowed\") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespace, (String) null, "Null not allowed", "Whitespace not allowed");
+        System.out.print("requireNonNullNorEmpty(\"   \", " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmpty, "   ", stringExceptionMessages);
 
-        System.out.print("requireNonNullNorWhitespace(\"\", \"Null not allowed\", \"Whitespace not allowed\") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespace, "", "Null not allowed", "Whitespace not allowed");
-
-        System.out.print("requireNonNullNorWhitespace(\"   \", \"Null not allowed\", \"Whitespace not allowed\") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespace, "   ", "Null not allowed", "Whitespace not allowed");
-
-        System.out.print("requireNonNullNorWhitespace(\" aaa \", \"Null not allowed\", \"Whitespace not allowed\") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespace, " aaa ", "Null not allowed", "Whitespace not allowed");
+        System.out.print("requireNonNullNorEmpty(\" aaa \", " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmpty, " aaa ", stringExceptionMessages);
 
         System.out.println();
     }
 
-    private void processRequireNonNullNorEmptyWithMessageSupplier(Supplier<String> nullMessageSupplier, Supplier<String> emptyMessageSupplier, String nullMessageSupplierName, String emptyMessageSupplierName) {
-        System.out.print("requireNonNullNorEmpty(null, " + nullMessageSupplierName + ", " + emptyMessageSupplierName + ") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmpty, (String) null, nullMessageSupplier, emptyMessageSupplier);
+    private void processRequireNonNullNorWhitespaceWithMessage(StringExceptionMessages stringExceptionMessages) {
+        String params;
+        if(stringExceptionMessages != null) {
+            params = getObjectValueToPrint(stringExceptionMessages.nullStringParam()) + ", " + getObjectValueToPrint(stringExceptionMessages.emptyStringParam()) + ", " + getObjectValueToPrint(stringExceptionMessages.whitespaceStringParam());
+        } else {
+            params = "NULL";
+        }
 
-        System.out.print("requireNonNullNorEmpty(\"\", " + nullMessageSupplierName + ", " + emptyMessageSupplierName + ") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmpty, "", nullMessageSupplier, emptyMessageSupplier);
+        System.out.print("requireNonNullNorWhitespace(null, " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespace, (String) null, stringExceptionMessages);
 
-        System.out.print("requireNonNullNorEmpty(\"   \", " + nullMessageSupplierName + ", " + emptyMessageSupplierName + ") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmpty, "   ", nullMessageSupplier, emptyMessageSupplier);
+        System.out.print("requireNonNullNorWhitespace(\"\", " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespace, "", stringExceptionMessages);
 
-        System.out.print("requireNonNullNorEmpty(\" aaa \", " + nullMessageSupplierName + ", " + emptyMessageSupplierName + ") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmpty, " aaa ", nullMessageSupplier, emptyMessageSupplier);
+        System.out.print("requireNonNullNorWhitespace(\"   \", " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespace, "   ", stringExceptionMessages);
+
+        System.out.print("requireNonNullNorWhitespace(\" aaa \", " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespace, " aaa ", stringExceptionMessages);
+
+        System.out.println();
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    //DEFAULT EXCEPTION WITH MESSAGE SUPPLIER METHODS
+
+    private void processRequireNonNullNorEmptyWithMessageSupplier(StringExceptionMessageSuppliers stringExceptionMessageSuppliers, String nullMessageSupplierName, String emptyMessageSupplierName, String whitespaceMessageSupplierName) {
+        String params;
+        if(stringExceptionMessageSuppliers != null) {
+            params = nullMessageSupplierName + ", " + emptyMessageSupplierName + ", " + whitespaceMessageSupplierName;
+        } else {
+            params = "NULL";
+        }
+
+        System.out.print("requireNonNullNorEmpty(null, " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmpty, (String) null, stringExceptionMessageSuppliers);
+
+        System.out.print("requireNonNullNorEmpty(\"\", " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmpty, "", stringExceptionMessageSuppliers);
+
+        System.out.print("requireNonNullNorEmpty(\"   \", " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmpty, "   ", stringExceptionMessageSuppliers);
+
+        System.out.print("requireNonNullNorEmpty(\" aaa \", " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmpty, " aaa ", stringExceptionMessageSuppliers);
 
         System.out.println();
     }
 
-    private void processRequireNonNullNorWhitespaceWithMessageSupplier(Supplier<String> nullMessageSupplier, Supplier<String> whitespaceMessageSupplier, String nullMessageSupplierName, String whitespaceMessageSupplierName) {
-        System.out.print("requireNonNullNorWhitespace(null, " + nullMessageSupplierName + ", " + whitespaceMessageSupplierName + ") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespace, (String) null, nullMessageSupplier, whitespaceMessageSupplier);
+    private void processRequireNonNullNorWhitespaceWithMessageSupplier(StringExceptionMessageSuppliers stringExceptionMessageSuppliers, String nullMessageSupplierName, String emptyMessageSupplierName, String whitespaceMessageSupplierName) {
+        String params;
+        if(stringExceptionMessageSuppliers != null) {
+            params = nullMessageSupplierName + ", " + emptyMessageSupplierName + ", " + whitespaceMessageSupplierName;
+        } else {
+            params = "NULL";
+        }
 
-        System.out.print("requireNonNullNorWhitespace(\"\", " + nullMessageSupplierName + ", " + whitespaceMessageSupplierName + ") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespace, "", nullMessageSupplier, whitespaceMessageSupplier);
+        System.out.print("requireNonNullNorWhitespace(null, " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespace, (String) null, stringExceptionMessageSuppliers);
 
-        System.out.print("requireNonNullNorWhitespace(\"   \", " + nullMessageSupplierName + ", " + whitespaceMessageSupplierName + ") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespace, "   ", nullMessageSupplier, whitespaceMessageSupplier);
+        System.out.print("requireNonNullNorWhitespace(\"\", " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespace, "", stringExceptionMessageSuppliers);
 
-        System.out.print("requireNonNullNorWhitespace(\" aaa \", " + nullMessageSupplierName + ", " + whitespaceMessageSupplierName + ") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespace, " aaa ",nullMessageSupplier, whitespaceMessageSupplier);
+        System.out.print("requireNonNullNorWhitespace(\"   \", " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespace, "   ", stringExceptionMessageSuppliers);
+
+        System.out.print("requireNonNullNorWhitespace(\" aaa \", " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespace, " aaa ", stringExceptionMessageSuppliers);
 
         System.out.println();
     }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    //ELSE THROW METHODS
+
+    private void processRequireNonNullNorEmptyElseThrow(StringExceptionSuppliers stringExceptionSuppliers, String nullThrowableSupplierName, String emptyThrowableSupplierName, String whitespaceThrowableSupplierName) {
+        String params;
+        if(stringExceptionSuppliers != null) {
+            params = nullThrowableSupplierName + ", " + emptyThrowableSupplierName + ", " + whitespaceThrowableSupplierName;
+        } else {
+            params = "NULL";
+        }
+
+        System.out.print("requireNonNullNorEmptyElseThrow(null, " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmptyElseThrow, (String) null, stringExceptionSuppliers);
+
+        System.out.print("requireNonNullNorEmptyElseThrow(\"\", " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmptyElseThrow, "", stringExceptionSuppliers);
+
+        System.out.print("requireNonNullNorEmptyElseThrow(\"   \", " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmptyElseThrow, "   ", stringExceptionSuppliers);
+
+        System.out.print("requireNonNullNorEmptyElseThrow(\" aaa \", " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmptyElseThrow, " aaa ", stringExceptionSuppliers);
+
+        System.out.println();
+    }
+
+    private void processRequireNonNullNorWhitespaceElseThrow(StringExceptionSuppliers stringExceptionSuppliers, String nullThrowableSupplierName, String emptyThrowableSupplierName, String whitespaceThrowableSupplierName) {
+        String params;
+        if(stringExceptionSuppliers != null) {
+            params = nullThrowableSupplierName + ", " + emptyThrowableSupplierName + ", " + whitespaceThrowableSupplierName;
+        } else {
+            params = "NULL";
+        }
+
+        System.out.print("requireNonNullNorWhitespaceElseThrow(null, " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespaceElseThrow, (String) null, stringExceptionSuppliers);
+
+        System.out.print("requireNonNullNorWhitespaceElseThrow(\"\", " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespaceElseThrow, "", stringExceptionSuppliers);
+
+        System.out.print("requireNonNullNorWhitespaceElseThrow(\"   \", " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespaceElseThrow, "   ", stringExceptionSuppliers);
+
+        System.out.print("requireNonNullNorWhitespaceElseThrow(\" aaa \", " + params + ") <=> ");
+        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespaceElseThrow, " aaa ", stringExceptionSuppliers);
+
+        System.out.println();
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    //ELSE METHODS
 
     private void processRequireNonNullNorEmptyElse(String defaultValue) {
         System.out.print("requireNonNullNorEmptyElse(null, " + this.getObjectValueToPrint(defaultValue) + ") <=> ");
@@ -434,6 +550,10 @@ public class Main {
         System.out.println();
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
+    //ELSE GET METHODS
+
     private void processRequireNonNullNorEmptyElseGet(Supplier<String> defaultValueSupplier, String defaultValueSupplierName) {
         System.out.print("requireNonNullNorEmptyElseGet(null, " + defaultValueSupplierName + ") <=> ");
         this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmptyElseGet, (String) null, defaultValueSupplier);
@@ -466,37 +586,9 @@ public class Main {
         System.out.println();
     }
 
-    private void processRequireNonNullNorEmptyElseThrow(Supplier<Throwable> nullThrowableSupplier, Supplier<Throwable> emptyThrowableSupplier, String nullThrowableSupplierName, String emptyThrowableSupplierName) {
-        System.out.print("requireNonNullNorEmptyElseThrow(null, " + nullThrowableSupplierName + ", " + emptyThrowableSupplierName + ") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmptyElseThrow, (String) null, nullThrowableSupplier, emptyThrowableSupplier);
+    //------------------------------------------------------------------------------------------------------------------
 
-        System.out.print("requireNonNullNorEmptyElseThrow(\"\", " + nullThrowableSupplierName + ", " + emptyThrowableSupplierName + ") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmptyElseThrow, "", nullThrowableSupplier, emptyThrowableSupplier);
-
-        System.out.print("requireNonNullNorEmptyElseThrow(\"   \", " + nullThrowableSupplierName + ", " + emptyThrowableSupplierName + ") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmptyElseThrow, "   ", nullThrowableSupplier, emptyThrowableSupplier);
-
-        System.out.print("requireNonNullNorEmptyElseThrow(\" aaa \", " + nullThrowableSupplierName + ", " + emptyThrowableSupplierName + ") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorEmptyElseThrow, " aaa ", nullThrowableSupplier, emptyThrowableSupplier);
-
-        System.out.println();
-    }
-
-    private void processRequireNonNullNorWhitespaceElseThrow(Supplier<Throwable> nullThrowableSupplier, Supplier<Throwable> whitespaceThrowableSupplier, String nullThrowableSupplierName, String whitespaceThrowableSupplierName) {
-        System.out.print("requireNonNullNorWhitespaceElseThrow(null, " + nullThrowableSupplierName + ", " + whitespaceThrowableSupplierName + ") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespaceElseThrow, (String) null, nullThrowableSupplier, whitespaceThrowableSupplier);
-
-        System.out.print("requireNonNullNorWhitespaceElseThrow(\"\", " + nullThrowableSupplierName + ", " + whitespaceThrowableSupplierName + ") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespaceElseThrow, "", nullThrowableSupplier, whitespaceThrowableSupplier);
-
-        System.out.print("requireNonNullNorWhitespaceElseThrow(\"   \", " + nullThrowableSupplierName + ", " + whitespaceThrowableSupplierName + ") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespaceElseThrow, "   ", nullThrowableSupplier, whitespaceThrowableSupplier);
-
-        System.out.print("requireNonNullNorWhitespaceElseThrow(\" aaa \", " + nullThrowableSupplierName + ", " + whitespaceThrowableSupplierName + ") <=> ");
-        this.processAndPrintResultOrThrowable(Strings::requireNonNullNorWhitespaceElseThrow, " aaa ",nullThrowableSupplier, whitespaceThrowableSupplier);
-
-        System.out.println();
-    }
+    //EXCEPTION MESSAGE SUPPLIERS
 
     private String nullMessageSupplier() {
         return null;
@@ -514,6 +606,30 @@ public class Main {
         return "Message Supplier: Whitespace not allowed";
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
+    //THROWABLE SUPPLIERS
+
+    private Throwable nullThrowableSupplier() {
+        return null;
+    }
+
+    private Throwable nonNullThrowableSupplier() {
+        return new NoSuchElementException("Throwable Supplier: Null not allowed");
+    }
+
+    private Throwable nonEmptyThrowableSupplier() {
+        return new Exception("Throwable Supplier: Empty not allowed");
+    }
+
+    private Throwable nonWhitespaceThrowableSupplier() {
+        return new Throwable("Throwable Supplier: Whitespace not allowed");
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    //DEFAULT VALUE SUPPLIERS
+
     private String nullDefaultValueSupplier() {
         return null;
     }
@@ -530,21 +646,7 @@ public class Main {
         return " Supplier: defaultValue ";
     }
 
-    private Throwable nullThrowableSupplier() {
-        return null;
-    }
-
-    private Throwable nonNullThrowableSupplier() {
-        return new Throwable("Throwable Supplier: Null not allowed");
-    }
-
-    private Throwable nonEmptyThrowableSupplier() {
-        return new Throwable("Throwable Supplier: Empty not allowed");
-    }
-
-    private Throwable nonWhitespaceThrowableSupplier() {
-        return new Throwable("Throwable Supplier: Whitespace not allowed");
-    }
+    //------------------------------------------------------------------------------------------------------------------
 
     private <I1, O> void processAndPrintResultOrThrowable(Function<I1, O> function, I1 param) {
         try {
@@ -558,15 +660,6 @@ public class Main {
     private <I1, I2, O> void processAndPrintResultOrThrowable(BiFunction<I1, I2, O> function, I1 param1, I2 param2) {
         try {
             O result = function.apply(param1, param2);
-            System.out.println(this.getObjectValueToPrint(result));
-        } catch(Throwable t) {
-            System.out.println(t.getClass().getCanonicalName() + " " + t.getMessage());
-        }
-    }
-
-    private <I1, I2, I3, O> void processAndPrintResultOrThrowable(TriFunctionWithThrowable<I1, I2, I3, O> function, I1 param1, I2 param2, I3 param3) {
-        try {
-            O result = function.apply(param1, param2, param3);
             System.out.println(this.getObjectValueToPrint(result));
         } catch(Throwable t) {
             System.out.println(t.getClass().getCanonicalName() + " " + t.getMessage());
