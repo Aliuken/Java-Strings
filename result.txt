@@ -1,0 +1,404 @@
+1. STRING_COMPARATOR
+
+STRING_COMPARATOR.compare(null, null) <=> 0
+STRING_COMPARATOR.compare(null, "bbb") <=> -1
+STRING_COMPARATOR.compare("aaa", null) <=> 1
+STRING_COMPARATOR.compare("aaa", "aba") <=> -1
+STRING_COMPARATOR.compare("aba", "aaa") <=> 1
+STRING_COMPARATOR.compare("aaa", "aaa") <=> 0
+STRING_COMPARATOR.compare("aaa", "aAa") <=> 32
+STRING_COMPARATOR.compare("aAa", "aaa") <=> -32
+
+
+2. STRING_COMPARATOR_IGNORE_CASE
+
+STRING_COMPARATOR_IGNORE_CASE.compare(null, null) <=> 0
+STRING_COMPARATOR_IGNORE_CASE.compare(null, "bbb") <=> -1
+STRING_COMPARATOR_IGNORE_CASE.compare("aaa", null) <=> 1
+STRING_COMPARATOR_IGNORE_CASE.compare("aaa", "aba") <=> -1
+STRING_COMPARATOR_IGNORE_CASE.compare("aba", "aaa") <=> 1
+STRING_COMPARATOR_IGNORE_CASE.compare("aaa", "aaa") <=> 0
+STRING_COMPARATOR_IGNORE_CASE.compare("aaa", "aAa") <=> 0
+STRING_COMPARATOR_IGNORE_CASE.compare("aAa", "aaa") <=> 0
+
+
+3. equalsIgnoreCase
+
+equalsIgnoreCase(null, null) <=> true
+equalsIgnoreCase(null, "bbb") <=> false
+equalsIgnoreCase("aaa", null) <=> false
+equalsIgnoreCase("aaa", "aba") <=> false
+equalsIgnoreCase("aba", "aaa") <=> false
+equalsIgnoreCase("aaa", "aaa") <=> true
+equalsIgnoreCase("aaa", "aAa") <=> true
+equalsIgnoreCase("aAa", "aaa") <=> true
+
+
+4. strip
+
+strip(null) <=> null
+strip(" aaa ") <=> "aaa"
+
+
+5. isNullOrEmpty
+
+isNullOrEmpty(null) <=> true
+isNullOrEmpty("") <=> true
+isNullOrEmpty("   ") <=> false
+isNullOrEmpty(" aaa ") <=> false
+
+
+6. isNullOrWhitespace
+
+isNullOrWhitespace(null) <=> true
+isNullOrWhitespace("") <=> true
+isNullOrWhitespace("   ") <=> true
+isNullOrWhitespace(" aaa ") <=> false
+
+
+7. nonNullNorEmpty
+
+nonNullNorEmpty(null) <=> false
+nonNullNorEmpty("") <=> false
+nonNullNorEmpty("   ") <=> true
+nonNullNorEmpty(" aaa ") <=> true
+
+
+8. nonNullNorWhitespace
+
+nonNullNorWhitespace(null) <=> false
+nonNullNorWhitespace("") <=> false
+nonNullNorWhitespace("   ") <=> false
+nonNullNorWhitespace(" aaa ") <=> true
+
+
+9. requireNonNullNorEmpty
+
+requireNonNullNorEmpty(null, NULL) <=> java.lang.NullPointerException stringExceptionsDefault
+requireNonNullNorEmpty("", NULL) <=> java.lang.NullPointerException stringExceptionsDefault
+requireNonNullNorEmpty("   ", NULL) <=> "   "
+requireNonNullNorEmpty(" aaa ", NULL) <=> " aaa "
+
+requireNonNullNorEmpty(null, DEFAULT) <=> java.lang.NullPointerException null
+requireNonNullNorEmpty("", DEFAULT) <=> java.lang.IllegalArgumentException null
+requireNonNullNorEmpty("   ", DEFAULT) <=> "   "
+requireNonNullNorEmpty(" aaa ", DEFAULT) <=> " aaa "
+
+
+10. requireNonNullNorWhitespace
+
+requireNonNullNorWhitespace(null, NULL) <=> java.lang.NullPointerException stringExceptionsDefault
+requireNonNullNorWhitespace("", NULL) <=> java.lang.NullPointerException stringExceptionsDefault
+requireNonNullNorWhitespace("   ", NULL) <=> java.lang.NullPointerException stringExceptionsDefault
+requireNonNullNorWhitespace(" aaa ", NULL) <=> "aaa"
+
+requireNonNullNorWhitespace(null, DEFAULT) <=> java.lang.NullPointerException null
+requireNonNullNorWhitespace("", DEFAULT) <=> java.lang.IllegalArgumentException null
+requireNonNullNorWhitespace("   ", DEFAULT) <=> java.lang.IllegalArgumentException null
+requireNonNullNorWhitespace(" aaa ", DEFAULT) <=> "aaa"
+
+
+11. requireNonNullNorEmptyWithMessage
+
+requireNonNullNorEmpty(null, NULL) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessage
+requireNonNullNorEmpty("", NULL) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessage
+requireNonNullNorEmpty("   ", NULL) <=> "   "
+requireNonNullNorEmpty(" aaa ", NULL) <=> " aaa "
+
+requireNonNullNorEmpty(null, null, null, null) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessage.nullStringParam
+requireNonNullNorEmpty("", null, null, null) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessage.emptyStringParam
+requireNonNullNorEmpty("   ", null, null, null) <=> "   "
+requireNonNullNorEmpty(" aaa ", null, null, null) <=> " aaa "
+
+requireNonNullNorEmpty(null, null, "Empty not allowed", null) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessage.nullStringParam
+requireNonNullNorEmpty("", null, "Empty not allowed", null) <=> java.lang.IllegalArgumentException Empty not allowed
+requireNonNullNorEmpty("   ", null, "Empty not allowed", null) <=> "   "
+requireNonNullNorEmpty(" aaa ", null, "Empty not allowed", null) <=> " aaa "
+
+requireNonNullNorEmpty(null, "Null not allowed", null, null) <=> java.lang.NullPointerException Null not allowed
+requireNonNullNorEmpty("", "Null not allowed", null, null) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessage.emptyStringParam
+requireNonNullNorEmpty("   ", "Null not allowed", null, null) <=> "   "
+requireNonNullNorEmpty(" aaa ", "Null not allowed", null, null) <=> " aaa "
+
+requireNonNullNorEmpty(null, "Null not allowed", "Empty not allowed", null) <=> java.lang.NullPointerException Null not allowed
+requireNonNullNorEmpty("", "Null not allowed", "Empty not allowed", null) <=> java.lang.IllegalArgumentException Empty not allowed
+requireNonNullNorEmpty("   ", "Null not allowed", "Empty not allowed", null) <=> "   "
+requireNonNullNorEmpty(" aaa ", "Null not allowed", "Empty not allowed", null) <=> " aaa "
+
+
+12. requireNonNullNorWhitespaceWithMessage
+
+requireNonNullNorWhitespace(null, NULL) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessage
+requireNonNullNorWhitespace("", NULL) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessage
+requireNonNullNorWhitespace("   ", NULL) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessage
+requireNonNullNorWhitespace(" aaa ", NULL) <=> "aaa"
+
+requireNonNullNorWhitespace(null, null, null, null) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessage.nullStringParam
+requireNonNullNorWhitespace("", null, null, null) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessage.emptyStringParam
+requireNonNullNorWhitespace("   ", null, null, null) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessage.whitespaceStringParam
+requireNonNullNorWhitespace(" aaa ", null, null, null) <=> "aaa"
+
+requireNonNullNorWhitespace(null, null, "Empty not allowed", "Whitespace not allowed") <=> java.lang.NullPointerException stringExceptionsDefaultWithMessage.nullStringParam
+requireNonNullNorWhitespace("", null, "Empty not allowed", "Whitespace not allowed") <=> java.lang.IllegalArgumentException Empty not allowed
+requireNonNullNorWhitespace("   ", null, "Empty not allowed", "Whitespace not allowed") <=> java.lang.IllegalArgumentException Whitespace not allowed
+requireNonNullNorWhitespace(" aaa ", null, "Empty not allowed", "Whitespace not allowed") <=> "aaa"
+
+requireNonNullNorWhitespace(null, "Null not allowed", null, "Whitespace not allowed") <=> java.lang.NullPointerException Null not allowed
+requireNonNullNorWhitespace("", "Null not allowed", null, "Whitespace not allowed") <=> java.lang.NullPointerException stringExceptionsDefaultWithMessage.emptyStringParam
+requireNonNullNorWhitespace("   ", "Null not allowed", null, "Whitespace not allowed") <=> java.lang.IllegalArgumentException Whitespace not allowed
+requireNonNullNorWhitespace(" aaa ", "Null not allowed", null, "Whitespace not allowed") <=> "aaa"
+
+requireNonNullNorWhitespace(null, "Null not allowed", "Empty not allowed", null) <=> java.lang.NullPointerException Null not allowed
+requireNonNullNorWhitespace("", "Null not allowed", "Empty not allowed", null) <=> java.lang.IllegalArgumentException Empty not allowed
+requireNonNullNorWhitespace("   ", "Null not allowed", "Empty not allowed", null) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessage.whitespaceStringParam
+requireNonNullNorWhitespace(" aaa ", "Null not allowed", "Empty not allowed", null) <=> "aaa"
+
+requireNonNullNorWhitespace(null, "Null not allowed", "Empty not allowed", "Whitespace not allowed") <=> java.lang.NullPointerException Null not allowed
+requireNonNullNorWhitespace("", "Null not allowed", "Empty not allowed", "Whitespace not allowed") <=> java.lang.IllegalArgumentException Empty not allowed
+requireNonNullNorWhitespace("   ", "Null not allowed", "Empty not allowed", "Whitespace not allowed") <=> java.lang.IllegalArgumentException Whitespace not allowed
+requireNonNullNorWhitespace(" aaa ", "Null not allowed", "Empty not allowed", "Whitespace not allowed") <=> "aaa"
+
+
+13. requireNonNullNorEmptyWithMessageSupplier
+
+requireNonNullNorEmpty(null, NULL) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessageSupplier
+requireNonNullNorEmpty("", NULL) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessageSupplier
+requireNonNullNorEmpty("   ", NULL) <=> "   "
+requireNonNullNorEmpty(" aaa ", NULL) <=> " aaa "
+
+requireNonNullNorEmpty(null, null, null, null) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessageSupplier.nullStringParam
+requireNonNullNorEmpty("", null, null, null) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessageSupplier.emptyStringParam
+requireNonNullNorEmpty("   ", null, null, null) <=> "   "
+requireNonNullNorEmpty(" aaa ", null, null, null) <=> " aaa "
+
+requireNonNullNorEmpty(null, null, this::nonEmptyMessageSupplier, null) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessageSupplier.nullStringParam
+requireNonNullNorEmpty("", null, this::nonEmptyMessageSupplier, null) <=> java.lang.IllegalArgumentException Message Supplier: Empty not allowed
+requireNonNullNorEmpty("   ", null, this::nonEmptyMessageSupplier, null) <=> "   "
+requireNonNullNorEmpty(" aaa ", null, this::nonEmptyMessageSupplier, null) <=> " aaa "
+
+requireNonNullNorEmpty(null, this::nonNullMessageSupplier, null, null) <=> java.lang.NullPointerException Message Supplier: Null not allowed
+requireNonNullNorEmpty("", this::nonNullMessageSupplier, null, null) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessageSupplier.emptyStringParam
+requireNonNullNorEmpty("   ", this::nonNullMessageSupplier, null, null) <=> "   "
+requireNonNullNorEmpty(" aaa ", this::nonNullMessageSupplier, null, null) <=> " aaa "
+
+requireNonNullNorEmpty(null, this::nullMessageSupplier, this::nullMessageSupplier, null) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessageSupplier.nullStringParam.get()
+requireNonNullNorEmpty("", this::nullMessageSupplier, this::nullMessageSupplier, null) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessageSupplier.emptyStringParam.get()
+requireNonNullNorEmpty("   ", this::nullMessageSupplier, this::nullMessageSupplier, null) <=> "   "
+requireNonNullNorEmpty(" aaa ", this::nullMessageSupplier, this::nullMessageSupplier, null) <=> " aaa "
+
+requireNonNullNorEmpty(null, this::nonNullMessageSupplier, this::nonEmptyMessageSupplier, null) <=> java.lang.NullPointerException Message Supplier: Null not allowed
+requireNonNullNorEmpty("", this::nonNullMessageSupplier, this::nonEmptyMessageSupplier, null) <=> java.lang.IllegalArgumentException Message Supplier: Empty not allowed
+requireNonNullNorEmpty("   ", this::nonNullMessageSupplier, this::nonEmptyMessageSupplier, null) <=> "   "
+requireNonNullNorEmpty(" aaa ", this::nonNullMessageSupplier, this::nonEmptyMessageSupplier, null) <=> " aaa "
+
+
+14. requireNonNullNorWhitespaceWithMessageSupplier
+
+requireNonNullNorWhitespace(null, NULL) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessageSupplier
+requireNonNullNorWhitespace("", NULL) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessageSupplier
+requireNonNullNorWhitespace("   ", NULL) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessageSupplier
+requireNonNullNorWhitespace(" aaa ", NULL) <=> "aaa"
+
+requireNonNullNorWhitespace(null, null, null, null) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessageSupplier.nullStringParam
+requireNonNullNorWhitespace("", null, null, null) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessageSupplier.emptyStringParam
+requireNonNullNorWhitespace("   ", null, null, null) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessageSupplier.whitespaceStringParam
+requireNonNullNorWhitespace(" aaa ", null, null, null) <=> "aaa"
+
+requireNonNullNorWhitespace(null, null, this::nonEmptyMessageSupplier, this::nonWhitespaceMessageSupplier) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessageSupplier.nullStringParam
+requireNonNullNorWhitespace("", null, this::nonEmptyMessageSupplier, this::nonWhitespaceMessageSupplier) <=> java.lang.IllegalArgumentException Message Supplier: Empty not allowed
+requireNonNullNorWhitespace("   ", null, this::nonEmptyMessageSupplier, this::nonWhitespaceMessageSupplier) <=> java.lang.IllegalArgumentException Message Supplier: Whitespace not allowed
+requireNonNullNorWhitespace(" aaa ", null, this::nonEmptyMessageSupplier, this::nonWhitespaceMessageSupplier) <=> "aaa"
+
+requireNonNullNorWhitespace(null, this::nonNullMessageSupplier, null, this::nonWhitespaceMessageSupplier) <=> java.lang.NullPointerException Message Supplier: Null not allowed
+requireNonNullNorWhitespace("", this::nonNullMessageSupplier, null, this::nonWhitespaceMessageSupplier) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessageSupplier.emptyStringParam
+requireNonNullNorWhitespace("   ", this::nonNullMessageSupplier, null, this::nonWhitespaceMessageSupplier) <=> java.lang.IllegalArgumentException Message Supplier: Whitespace not allowed
+requireNonNullNorWhitespace(" aaa ", this::nonNullMessageSupplier, null, this::nonWhitespaceMessageSupplier) <=> "aaa"
+
+requireNonNullNorWhitespace(null, this::nonNullMessageSupplier, this::nonEmptyMessageSupplier, null) <=> java.lang.NullPointerException Message Supplier: Null not allowed
+requireNonNullNorWhitespace("", this::nonNullMessageSupplier, this::nonEmptyMessageSupplier, null) <=> java.lang.IllegalArgumentException Message Supplier: Empty not allowed
+requireNonNullNorWhitespace("   ", this::nonNullMessageSupplier, this::nonEmptyMessageSupplier, null) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessageSupplier.whitespaceStringParam
+requireNonNullNorWhitespace(" aaa ", this::nonNullMessageSupplier, this::nonEmptyMessageSupplier, null) <=> "aaa"
+
+requireNonNullNorWhitespace(null, this::nullMessageSupplier, this::nullMessageSupplier, this::nullMessageSupplier) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessageSupplier.nullStringParam.get()
+requireNonNullNorWhitespace("", this::nullMessageSupplier, this::nullMessageSupplier, this::nullMessageSupplier) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessageSupplier.emptyStringParam.get()
+requireNonNullNorWhitespace("   ", this::nullMessageSupplier, this::nullMessageSupplier, this::nullMessageSupplier) <=> java.lang.NullPointerException stringExceptionsDefaultWithMessageSupplier.whitespaceStringParam.get()
+requireNonNullNorWhitespace(" aaa ", this::nullMessageSupplier, this::nullMessageSupplier, this::nullMessageSupplier) <=> "aaa"
+
+requireNonNullNorWhitespace(null, this::nonNullMessageSupplier, this::nonEmptyMessageSupplier, this::nonWhitespaceMessageSupplier) <=> java.lang.NullPointerException Message Supplier: Null not allowed
+requireNonNullNorWhitespace("", this::nonNullMessageSupplier, this::nonEmptyMessageSupplier, this::nonWhitespaceMessageSupplier) <=> java.lang.IllegalArgumentException Message Supplier: Empty not allowed
+requireNonNullNorWhitespace("   ", this::nonNullMessageSupplier, this::nonEmptyMessageSupplier, this::nonWhitespaceMessageSupplier) <=> java.lang.IllegalArgumentException Message Supplier: Whitespace not allowed
+requireNonNullNorWhitespace(" aaa ", this::nonNullMessageSupplier, this::nonEmptyMessageSupplier, this::nonWhitespaceMessageSupplier) <=> "aaa"
+
+
+15. requireNonNullNorEmptyElseThrow
+
+requireNonNullNorEmptyElseThrow(null, NULL) <=> java.lang.NullPointerException stringExceptionsCustom
+requireNonNullNorEmptyElseThrow("", NULL) <=> java.lang.NullPointerException stringExceptionsCustom
+requireNonNullNorEmptyElseThrow("   ", NULL) <=> "   "
+requireNonNullNorEmptyElseThrow(" aaa ", NULL) <=> " aaa "
+
+requireNonNullNorEmptyElseThrow(null, null, null, null) <=> java.lang.NullPointerException stringExceptionsCustom.nullStringParam
+requireNonNullNorEmptyElseThrow("", null, null, null) <=> java.lang.NullPointerException stringExceptionsCustom.emptyStringParam
+requireNonNullNorEmptyElseThrow("   ", null, null, null) <=> "   "
+requireNonNullNorEmptyElseThrow(" aaa ", null, null, null) <=> " aaa "
+
+requireNonNullNorEmptyElseThrow(null, null, this::nonEmptyThrowableSupplier, null) <=> java.lang.NullPointerException stringExceptionsCustom.nullStringParam
+requireNonNullNorEmptyElseThrow("", null, this::nonEmptyThrowableSupplier, null) <=> java.lang.Exception Throwable Supplier: Empty not allowed
+requireNonNullNorEmptyElseThrow("   ", null, this::nonEmptyThrowableSupplier, null) <=> "   "
+requireNonNullNorEmptyElseThrow(" aaa ", null, this::nonEmptyThrowableSupplier, null) <=> " aaa "
+
+requireNonNullNorEmptyElseThrow(null, this::nonNullThrowableSupplier, null, null) <=> java.util.NoSuchElementException Throwable Supplier: Null not allowed
+requireNonNullNorEmptyElseThrow("", this::nonNullThrowableSupplier, null, null) <=> java.lang.NullPointerException stringExceptionsCustom.emptyStringParam
+requireNonNullNorEmptyElseThrow("   ", this::nonNullThrowableSupplier, null, null) <=> "   "
+requireNonNullNorEmptyElseThrow(" aaa ", this::nonNullThrowableSupplier, null, null) <=> " aaa "
+
+requireNonNullNorEmptyElseThrow(null, this::nullThrowableSupplier, this::nullThrowableSupplier, null) <=> java.lang.NullPointerException stringExceptionsCustom.nullStringParam.get()
+requireNonNullNorEmptyElseThrow("", this::nullThrowableSupplier, this::nullThrowableSupplier, null) <=> java.lang.NullPointerException stringExceptionsCustom.emptyStringParam.get()
+requireNonNullNorEmptyElseThrow("   ", this::nullThrowableSupplier, this::nullThrowableSupplier, null) <=> "   "
+requireNonNullNorEmptyElseThrow(" aaa ", this::nullThrowableSupplier, this::nullThrowableSupplier, null) <=> " aaa "
+
+requireNonNullNorEmptyElseThrow(null, this::nonNullThrowableSupplier, this::nonEmptyThrowableSupplier, null) <=> java.util.NoSuchElementException Throwable Supplier: Null not allowed
+requireNonNullNorEmptyElseThrow("", this::nonNullThrowableSupplier, this::nonEmptyThrowableSupplier, null) <=> java.lang.Exception Throwable Supplier: Empty not allowed
+requireNonNullNorEmptyElseThrow("   ", this::nonNullThrowableSupplier, this::nonEmptyThrowableSupplier, null) <=> "   "
+requireNonNullNorEmptyElseThrow(" aaa ", this::nonNullThrowableSupplier, this::nonEmptyThrowableSupplier, null) <=> " aaa "
+
+
+16. requireNonNullNorWhitespaceElseThrow
+
+requireNonNullNorWhitespaceElseThrow(null, NULL) <=> java.lang.NullPointerException stringExceptionsCustom
+requireNonNullNorWhitespaceElseThrow("", NULL) <=> java.lang.NullPointerException stringExceptionsCustom
+requireNonNullNorWhitespaceElseThrow("   ", NULL) <=> java.lang.NullPointerException stringExceptionsCustom
+requireNonNullNorWhitespaceElseThrow(" aaa ", NULL) <=> "aaa"
+
+requireNonNullNorWhitespaceElseThrow(null, null, null, null) <=> java.lang.NullPointerException stringExceptionsCustom.nullStringParam
+requireNonNullNorWhitespaceElseThrow("", null, null, null) <=> java.lang.NullPointerException stringExceptionsCustom.emptyStringParam
+requireNonNullNorWhitespaceElseThrow("   ", null, null, null) <=> java.lang.NullPointerException stringExceptionsCustom.whitespaceStringParam
+requireNonNullNorWhitespaceElseThrow(" aaa ", null, null, null) <=> "aaa"
+
+requireNonNullNorWhitespaceElseThrow(null, null, this::nonEmptyThrowableSupplier, this::nonWhitespaceThrowableSupplier) <=> java.lang.NullPointerException stringExceptionsCustom.nullStringParam
+requireNonNullNorWhitespaceElseThrow("", null, this::nonEmptyThrowableSupplier, this::nonWhitespaceThrowableSupplier) <=> java.lang.Exception Throwable Supplier: Empty not allowed
+requireNonNullNorWhitespaceElseThrow("   ", null, this::nonEmptyThrowableSupplier, this::nonWhitespaceThrowableSupplier) <=> java.lang.Throwable Throwable Supplier: Whitespace not allowed
+requireNonNullNorWhitespaceElseThrow(" aaa ", null, this::nonEmptyThrowableSupplier, this::nonWhitespaceThrowableSupplier) <=> "aaa"
+
+requireNonNullNorWhitespaceElseThrow(null, this::nonNullThrowableSupplier, null, this::nonWhitespaceThrowableSupplier) <=> java.util.NoSuchElementException Throwable Supplier: Null not allowed
+requireNonNullNorWhitespaceElseThrow("", this::nonNullThrowableSupplier, null, this::nonWhitespaceThrowableSupplier) <=> java.lang.NullPointerException stringExceptionsCustom.emptyStringParam
+requireNonNullNorWhitespaceElseThrow("   ", this::nonNullThrowableSupplier, null, this::nonWhitespaceThrowableSupplier) <=> java.lang.Throwable Throwable Supplier: Whitespace not allowed
+requireNonNullNorWhitespaceElseThrow(" aaa ", this::nonNullThrowableSupplier, null, this::nonWhitespaceThrowableSupplier) <=> "aaa"
+
+requireNonNullNorWhitespaceElseThrow(null, this::nonNullThrowableSupplier, this::nonEmptyThrowableSupplier, null) <=> java.util.NoSuchElementException Throwable Supplier: Null not allowed
+requireNonNullNorWhitespaceElseThrow("", this::nonNullThrowableSupplier, this::nonEmptyThrowableSupplier, null) <=> java.lang.Exception Throwable Supplier: Empty not allowed
+requireNonNullNorWhitespaceElseThrow("   ", this::nonNullThrowableSupplier, this::nonEmptyThrowableSupplier, null) <=> java.lang.NullPointerException stringExceptionsCustom.whitespaceStringParam
+requireNonNullNorWhitespaceElseThrow(" aaa ", this::nonNullThrowableSupplier, this::nonEmptyThrowableSupplier, null) <=> "aaa"
+
+requireNonNullNorWhitespaceElseThrow(null, this::nullThrowableSupplier, this::nullThrowableSupplier, this::nullThrowableSupplier) <=> java.lang.NullPointerException stringExceptionsCustom.nullStringParam.get()
+requireNonNullNorWhitespaceElseThrow("", this::nullThrowableSupplier, this::nullThrowableSupplier, this::nullThrowableSupplier) <=> java.lang.NullPointerException stringExceptionsCustom.emptyStringParam.get()
+requireNonNullNorWhitespaceElseThrow("   ", this::nullThrowableSupplier, this::nullThrowableSupplier, this::nullThrowableSupplier) <=> java.lang.NullPointerException stringExceptionsCustom.whitespaceStringParam.get()
+requireNonNullNorWhitespaceElseThrow(" aaa ", this::nullThrowableSupplier, this::nullThrowableSupplier, this::nullThrowableSupplier) <=> "aaa"
+
+requireNonNullNorWhitespaceElseThrow(null, this::nonNullThrowableSupplier, this::nonEmptyThrowableSupplier, this::nonWhitespaceThrowableSupplier) <=> java.util.NoSuchElementException Throwable Supplier: Null not allowed
+requireNonNullNorWhitespaceElseThrow("", this::nonNullThrowableSupplier, this::nonEmptyThrowableSupplier, this::nonWhitespaceThrowableSupplier) <=> java.lang.Exception Throwable Supplier: Empty not allowed
+requireNonNullNorWhitespaceElseThrow("   ", this::nonNullThrowableSupplier, this::nonEmptyThrowableSupplier, this::nonWhitespaceThrowableSupplier) <=> java.lang.Throwable Throwable Supplier: Whitespace not allowed
+requireNonNullNorWhitespaceElseThrow(" aaa ", this::nonNullThrowableSupplier, this::nonEmptyThrowableSupplier, this::nonWhitespaceThrowableSupplier) <=> "aaa"
+
+
+17. requireNonNullNorEmptyElse
+
+requireNonNullNorEmptyElse(null, null) <=> java.lang.NullPointerException defaultStr
+requireNonNullNorEmptyElse("", null) <=> java.lang.NullPointerException defaultStr
+requireNonNullNorEmptyElse("   ", null) <=> "   "
+requireNonNullNorEmptyElse(" aaa ", null) <=> " aaa "
+
+requireNonNullNorEmptyElse(null, "") <=> java.lang.IllegalArgumentException defaultStr
+requireNonNullNorEmptyElse("", "") <=> java.lang.IllegalArgumentException defaultStr
+requireNonNullNorEmptyElse("   ", "") <=> "   "
+requireNonNullNorEmptyElse(" aaa ", "") <=> " aaa "
+
+requireNonNullNorEmptyElse(null, "     ") <=> "     "
+requireNonNullNorEmptyElse("", "     ") <=> "     "
+requireNonNullNorEmptyElse("   ", "     ") <=> "   "
+requireNonNullNorEmptyElse(" aaa ", "     ") <=> " aaa "
+
+requireNonNullNorEmptyElse(null, " defaultValue ") <=> " defaultValue "
+requireNonNullNorEmptyElse("", " defaultValue ") <=> " defaultValue "
+requireNonNullNorEmptyElse("   ", " defaultValue ") <=> "   "
+requireNonNullNorEmptyElse(" aaa ", " defaultValue ") <=> " aaa "
+
+
+18. requireNonNullNorWhitespaceElse
+
+requireNonNullNorWhitespaceElse(null, null) <=> java.lang.NullPointerException defaultStr
+requireNonNullNorWhitespaceElse("", null) <=> java.lang.NullPointerException defaultStr
+requireNonNullNorWhitespaceElse("   ", null) <=> java.lang.NullPointerException defaultStr
+requireNonNullNorWhitespaceElse(" aaa ", null) <=> "aaa"
+
+requireNonNullNorWhitespaceElse(null, "") <=> java.lang.IllegalArgumentException defaultStr
+requireNonNullNorWhitespaceElse("", "") <=> java.lang.IllegalArgumentException defaultStr
+requireNonNullNorWhitespaceElse("   ", "") <=> java.lang.IllegalArgumentException defaultStr
+requireNonNullNorWhitespaceElse(" aaa ", "") <=> "aaa"
+
+requireNonNullNorWhitespaceElse(null, "     ") <=> java.lang.IllegalArgumentException defaultStr
+requireNonNullNorWhitespaceElse("", "     ") <=> java.lang.IllegalArgumentException defaultStr
+requireNonNullNorWhitespaceElse("   ", "     ") <=> java.lang.IllegalArgumentException defaultStr
+requireNonNullNorWhitespaceElse(" aaa ", "     ") <=> "aaa"
+
+requireNonNullNorWhitespaceElse(null, " defaultValue ") <=> "defaultValue"
+requireNonNullNorWhitespaceElse("", " defaultValue ") <=> "defaultValue"
+requireNonNullNorWhitespaceElse("   ", " defaultValue ") <=> "defaultValue"
+requireNonNullNorWhitespaceElse(" aaa ", " defaultValue ") <=> "aaa"
+
+
+19. requireNonNullNorEmptyElseGet
+
+requireNonNullNorEmptyElseGet(null, null) <=> java.lang.NullPointerException supplier
+requireNonNullNorEmptyElseGet("", null) <=> java.lang.NullPointerException supplier
+requireNonNullNorEmptyElseGet("   ", null) <=> "   "
+requireNonNullNorEmptyElseGet(" aaa ", null) <=> " aaa "
+
+requireNonNullNorEmptyElseGet(null, this::nullDefaultValueSupplier) <=> java.lang.NullPointerException supplier.get()
+requireNonNullNorEmptyElseGet("", this::nullDefaultValueSupplier) <=> java.lang.NullPointerException supplier.get()
+requireNonNullNorEmptyElseGet("   ", this::nullDefaultValueSupplier) <=> "   "
+requireNonNullNorEmptyElseGet(" aaa ", this::nullDefaultValueSupplier) <=> " aaa "
+
+requireNonNullNorEmptyElseGet(null, this::emptyDefaultValueSupplier) <=> java.lang.IllegalArgumentException supplier.get()
+requireNonNullNorEmptyElseGet("", this::emptyDefaultValueSupplier) <=> java.lang.IllegalArgumentException supplier.get()
+requireNonNullNorEmptyElseGet("   ", this::emptyDefaultValueSupplier) <=> "   "
+requireNonNullNorEmptyElseGet(" aaa ", this::emptyDefaultValueSupplier) <=> " aaa "
+
+requireNonNullNorEmptyElseGet(null, this::whitespaceDefaultValueSupplier) <=> "     "
+requireNonNullNorEmptyElseGet("", this::whitespaceDefaultValueSupplier) <=> "     "
+requireNonNullNorEmptyElseGet("   ", this::whitespaceDefaultValueSupplier) <=> "   "
+requireNonNullNorEmptyElseGet(" aaa ", this::whitespaceDefaultValueSupplier) <=> " aaa "
+
+requireNonNullNorEmptyElseGet(null, this::defaultValueSupplier) <=> " Supplier: defaultValue "
+requireNonNullNorEmptyElseGet("", this::defaultValueSupplier) <=> " Supplier: defaultValue "
+requireNonNullNorEmptyElseGet("   ", this::defaultValueSupplier) <=> "   "
+requireNonNullNorEmptyElseGet(" aaa ", this::defaultValueSupplier) <=> " aaa "
+
+
+20. requireNonNullNorWhitespaceElseGet
+
+requireNonNullNorWhitespaceElseGet(null, null) <=> java.lang.NullPointerException supplier
+requireNonNullNorWhitespaceElseGet("", null) <=> java.lang.NullPointerException supplier
+requireNonNullNorWhitespaceElseGet("   ", null) <=> java.lang.NullPointerException supplier
+requireNonNullNorWhitespaceElseGet(" aaa ", null) <=> "aaa"
+
+requireNonNullNorWhitespaceElseGet(null, this::nullDefaultValueSupplier) <=> java.lang.NullPointerException supplier.get()
+requireNonNullNorWhitespaceElseGet("", this::nullDefaultValueSupplier) <=> java.lang.NullPointerException supplier.get()
+requireNonNullNorWhitespaceElseGet("   ", this::nullDefaultValueSupplier) <=> java.lang.NullPointerException supplier.get()
+requireNonNullNorWhitespaceElseGet(" aaa ", this::nullDefaultValueSupplier) <=> "aaa"
+
+requireNonNullNorWhitespaceElseGet(null, this::emptyDefaultValueSupplier) <=> java.lang.IllegalArgumentException supplier.get()
+requireNonNullNorWhitespaceElseGet("", this::emptyDefaultValueSupplier) <=> java.lang.IllegalArgumentException supplier.get()
+requireNonNullNorWhitespaceElseGet("   ", this::emptyDefaultValueSupplier) <=> java.lang.IllegalArgumentException supplier.get()
+requireNonNullNorWhitespaceElseGet(" aaa ", this::emptyDefaultValueSupplier) <=> "aaa"
+
+requireNonNullNorWhitespaceElseGet(null, this::whitespaceDefaultValueSupplier) <=> java.lang.IllegalArgumentException supplier.get()
+requireNonNullNorWhitespaceElseGet("", this::whitespaceDefaultValueSupplier) <=> java.lang.IllegalArgumentException supplier.get()
+requireNonNullNorWhitespaceElseGet("   ", this::whitespaceDefaultValueSupplier) <=> java.lang.IllegalArgumentException supplier.get()
+requireNonNullNorWhitespaceElseGet(" aaa ", this::whitespaceDefaultValueSupplier) <=> "aaa"
+
+requireNonNullNorWhitespaceElseGet(null, this::defaultValueSupplier) <=> "Supplier: defaultValue"
+requireNonNullNorWhitespaceElseGet("", this::defaultValueSupplier) <=> "Supplier: defaultValue"
+requireNonNullNorWhitespaceElseGet("   ", this::defaultValueSupplier) <=> "Supplier: defaultValue"
+requireNonNullNorWhitespaceElseGet(" aaa ", this::defaultValueSupplier) <=> "aaa"
+
