@@ -292,7 +292,7 @@ public final class Strings {
                     LAMBDA_CUSTOM_WHITESPACE.apply(whitespaceStringThrowableSupplier));
         }
 
-        public StringExceptionsRecord(Supplier<Throwable> nullStringThrowableSupplier, Supplier<Throwable> emptyStringThrowableSupplier, Supplier<Throwable> whitespaceStringThrowableSupplier) {
+        private StringExceptionsRecord(Supplier<Throwable> nullStringThrowableSupplier, Supplier<Throwable> emptyStringThrowableSupplier, Supplier<Throwable> whitespaceStringThrowableSupplier) {
             this.nullStringThrowableSupplier = nullStringThrowableSupplier;
             this.emptyStringThrowableSupplier = emptyStringThrowableSupplier;
             this.whitespaceStringThrowableSupplier = whitespaceStringThrowableSupplier;
